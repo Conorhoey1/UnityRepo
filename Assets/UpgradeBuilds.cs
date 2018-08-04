@@ -16,8 +16,8 @@ public class UpgradeBuilds : MonoBehaviour
 
 
     //Labels
-    public Text estateNameText;
-    public Text roadNameText;
+   // public Text estateNameText;
+  //  public Text roadNameText;
 
     //House - Estate Upgrade
     public static string estateName;
@@ -113,7 +113,7 @@ public class UpgradeBuilds : MonoBehaviour
         //Display Text box to allow user to assign string to variable - string roadName;
 
         //Benefits of estate - Increase Happiness due to a community
-        stats.AreaIncreaseHappiness();
+        stats.areaIncreaseHappiness();
 
         //Make this disappear and appear when user clicks on the object/prefab   -  ---- We could use a button for now
 

@@ -12,35 +12,80 @@ public class SpawnObjects : MonoBehaviour
     // User is able to click anywhere in the screen which is not good
 
 
+   private Transform currentBuilding;
+   private bool hasPlaced;
+   private PlaceBuilding placeBuilding;
 
-    Vector3 mousePosition, targetPosition;
-    public Transform House;
+    public LayerMask buildingsMask;
+    //public Camera camera;
+    //Camera camera = GetComponent<Camera>();
 
-    float distance = 50f;
+    public void Start()
+    {
+       //Camera camera = GetComponent<Camera>();
+    }
 
     public void Update()
     {
 
-        //To get the current mouse position
-        mousePosition = Input.mousePosition;
+        Camera camera = GetComponent<Camera>();
 
-        //Convert the mousePosition according to World position
-        targetPosition = Camera.main.ScreenToWorldPoint(new Vector3(mousePosition.x, mousePosition.y, distance));
+        Vector3 m = Input.mousePosition;
+        m = new Vector3(m.x, m.y, transform.position.y);
+        Vector3 p = camera.ScreenToWorldPoint(m);
 
-        //Set the position of targetObject
-        House.position = targetPosition;
+        if (currentBuilding != null && !hasPlaced)
+        
+            currentBuilding.position = new Vector3(p.x, 0, p.z);
 
-        //Debug.Log(mousePosition+"   "+targetPosition);
+           if (Input.GetMouseButtonDown(0))
+            {
+               if(islegalPosition()) // Only place object if its legal placement as in not on top of another.
+                hasPlaced = true;
+            }
+    }
+
+      //  else
+      // {
+
+      //Vector3 m = Input.mousePosition;
+     //   m = new Vector3(m.x, m.y, transform.position.y);
+  // Vector3 p = camera.ScreenToWorldPoint(m);
 
 
-        //If Left Button is clicked
-        if (Input.GetMouseButtonUp(0))
-        {
-            //create the instance of targetObject and place it at given position.
-            Instantiate(House, House.transform.position, House.transform.rotation);
-        }
+      //   if(Input.GetMouseButtonDown(0))
+     //    {
+       //       RaycastHit hit = new RaycastHit();
+      //       Ray ray = new Ray(new Vector3(p.x,8,p.z),Vector3.down);
+    
+      //      if(Physics.Raycast(ray,out hit ,Mathf.Infinity , buildingsMask)) //This is when you touch a building / click on 
+       //       {
+       //             Debug.Log(hit.collider.name);
+       //        }
+      //      }
+       //}
 
 
+  //  }
+
+
+   bool islegalPosition() // collider test
+    {
+
+       if(placeBuilding.colliders.Count > 0)
+       {
+            return false;
+       }
+
+            return true;
+    }
+
+    public void SetItem(GameObject b)
+    {
+       Debug.Log(b.name);
+        hasPlaced = false;
+        currentBuilding = ((GameObject)Instantiate(b)).transform;
+       placeBuilding = currentBuilding.GetComponent<PlaceBuilding>();
     }
 
 }

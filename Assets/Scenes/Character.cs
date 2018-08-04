@@ -140,8 +140,8 @@ public class Character : MonoBehaviour
 
         setAreaType();
 
-        disableSpawnScript();
-        MoveCamera();
+        //disableSpawnScript();
+        //MoveCamera();
 
 
     }
@@ -392,11 +392,11 @@ public class Character : MonoBehaviour
        // spawn.enabled = false; //disable the script when escape is pressed
     }
 
-    public void MoveCamera()
-    {
-       Vector3 cameraPosition = new Vector3(0f, 0f, 0f);
-       sceneCam.transform.position = Vector3.Lerp(transform.position, cameraPosition, strength);
-    }
+   // public void MoveCamera()
+   // {
+   //    Vector3 cameraPosition = new Vector3(0f, 0f, 0f);
+   //    sceneCam.transform.position = Vector3.Lerp(transform.position, cameraPosition, strength);
+   // }
    
 }
 

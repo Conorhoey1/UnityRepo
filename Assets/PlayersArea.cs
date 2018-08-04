@@ -10,10 +10,6 @@ public class PlayersArea : MonoBehaviour
     //Map 
     //Can we get player stat at the top?
     // TImers run in all scenes 
-   
-
-
-
 
     //This script will be used to generate an area for the player in which they run/own
     //A town will have stats such population etc
@@ -26,20 +22,13 @@ public class PlayersArea : MonoBehaviour
     // we have method which tracks the mouse and the position but this will allow them to click at anytime, so we need to stop this only avaible when...
 
 
-
-
-
-
     //Scripts
     public CharacterCreator characterCreator; // Creator Script
     public Character ch; // Character Script
-   // public SpawnObjects spawnObjects;
+    public SpawnObjects spawnObjects;
     public StatManager statsManager;
     public UpgradeBuilds upgradeBuild;
-
-    
-
-
+   //public PlaceBuilding placeBuilding;
 
     //Area Variables
     //public static string areaName; // need a input box when user unlocks an area
@@ -57,16 +46,11 @@ public class PlayersArea : MonoBehaviour
     public int FoodLevel { get; set; }
     public int FoodAmount { get; set; }
 
-    
-
-
     //Purchase
     public int PriceOfAsset { get; set; }
 
-
     //House - Variables
     public int houseCounter { get; set; }
-    
 
     //Water Well - Variables
     public int waterWellCounter { get; set; }
@@ -74,42 +58,35 @@ public class PlayersArea : MonoBehaviour
     //Crops - Variables
     public int cropsCounter { get; set; }
 
-
-
     //Player Stats
     public static int PlayerCoin;
 
-
-    
-
-
-
-
-
+    //Building 
+    public GameObject [] buildings;
 
     // new PlayersArea(){ Watertype =" Water Well ", WaterAmount = 2 , PriceOfAsset = 10},
 
     // new PlayersArea(){ Watertype =" Water.. ", WaterLevel = 2 , WaterAmount = 3 , PriceOfAsset = 5}
 
-
-
-
     // Use this for initialization
     void Start()
     {
-     //  areaName = CharacterCreator.areaName;
-       // AreaLevel = CharacterCreator.AreaLevel = 1;
+        //  areaName = CharacterCreator.areaName;
+        // AreaLevel = CharacterCreator.AreaLevel = 1;
         //Population = CharacterCreator.Population = 1;// 1???
-       // areaType = CharacterCreator.areaType = "";
-          // creates 3 then quits??
+        // areaType = CharacterCreator.areaType = "";
+        // creates 3 then quits??
 
-       // setAreaName();
-      //  setAreaLevel();
-      //  setPopulation();
-      //  setAreaType();
+        // setAreaName();
+        //  setAreaLevel();
+        //  setPopulation();
+        //  setAreaType();
 
-      //  GameObject pa = new GameObject();
-      //  pa.AddComponent<PlayersArea>();
+        //  GameObject pa = new GameObject();
+        //  pa.AddComponent<PlayersArea>();
+
+       spawnObjects = GetComponent<SpawnObjects>();
+
     }
 
     // Update is called once per frame
@@ -120,7 +97,19 @@ public class PlayersArea : MonoBehaviour
         //statsManager.CheckLevelUp();
     }
 
-    
+    public void OnGUI()
+    {
+
+        //This will display button to choose which building, one under the other
+        for(int i = 0; i <buildings.Length; i++)
+        {
+            if(GUI.Button(new Rect(Screen.width/20 , Screen.height/12 * i, 100,30), buildings[i].name))
+            {
+                spawnObjects.SetItem(buildings[i]);
+            }
+        }
+    }
+
     public void buildHouse()
     {
         //This is called when user wants to build house
@@ -153,7 +142,6 @@ public class PlayersArea : MonoBehaviour
             //Benefits - Community spirt and happiness increase
             Debug.Log("Would you like to upgrade these houses to an estate for 1300 Coins");
 
-
             //User input but we want it to be a button yes or no buttons
             if(userInput == "Yes") 
             {
@@ -163,21 +151,17 @@ public class PlayersArea : MonoBehaviour
                 //Upgrade House build
                 upgradeBuild.UpgradeHouseBuild();
             }
+
             else if(userInput == "No")
             {
                 //No
                 Debug.Log("Purchase cancelled");
             }
             
-                
-            
-    
-
         }
 
         else
         {
-
 
             //Purchase + funds Check
             if (CharacterCreator.currentPlayerCoin >= 10)
@@ -203,7 +187,7 @@ public class PlayersArea : MonoBehaviour
         {
 
             Debug.Log("creating House");
-            // Create well on screen --TODO!!!
+            
 
 
             //Storage - Player Storage/SAVE
@@ -227,6 +211,9 @@ public class PlayersArea : MonoBehaviour
 
             //Increase Area Level
             statsManager.increaseAreaLevel();
+
+            //Create House / Prefab on screen
+        //    spawnObjects.Update();
 
           
         }
