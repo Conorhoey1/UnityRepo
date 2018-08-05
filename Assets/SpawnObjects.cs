@@ -11,10 +11,10 @@ public class SpawnObjects : MonoBehaviour
     // CUrsor and cube not 100% (FIX)
     // User is able to click anywhere in the screen which is not good
 
-
+   public PlaceBuilding placeBuilding;
    private Transform currentBuilding;
-   private bool hasPlaced;
-   private PlaceBuilding placeBuilding;
+   public bool hasPlaced;
+ 
 
     public LayerMask buildingsMask;
     //public Camera camera;
@@ -30,55 +30,65 @@ public class SpawnObjects : MonoBehaviour
 
         Camera camera = GetComponent<Camera>();
 
-        Vector3 m = Input.mousePosition;
-        m = new Vector3(m.x, m.y, transform.position.y);
-        Vector3 p = camera.ScreenToWorldPoint(m);
+       Vector3 m = Input.mousePosition;
+       m = new Vector3(m.x, m.y, transform.position.y);
+       Vector3 p = camera.ScreenToWorldPoint(m);
 
         if (currentBuilding != null && !hasPlaced)
-        
-            currentBuilding.position = new Vector3(p.x, 0, p.z);
 
-           if (Input.GetMouseButtonDown(0))
+           currentBuilding.position = new Vector3(p.x, 0, p.z);
+
+
+        if (Input.GetMouseButtonDown(0))
+       {
+         if (islegalPosition())
             {
-               if(islegalPosition()) // Only place object if its legal placement as in not on top of another.
-                hasPlaced = true;
+            // Only place object if its legal placement as in not on top of another.
+            hasPlaced = true;
             }
+        }
+
+
+
+     //   else
+      //  {
+
+            // Refer -https://www.youtube.com/watch?v=OuqThz4Zc9c
+
+            //  Vector3 m = Input.mousePosition;
+            //   m = new Vector3(m.x, m.y, transform.position.y);
+            // Vector3 p = camera.ScreenToWorldPoint(m);
+
+
+       //     if(Input.GetMouseButtonDown(0))
+        //    {
+        //        RaycastHit hit = new RaycastHit();
+        //         Ray ray = new Ray(new Vector3(p.x,8,p.z),Vector3.down);
+        
+         //   if(Physics.Raycast(ray,out hit ,Mathf.Infinity , buildingsMask)) //This is when you touch a building / click on 
+         //      {
+         //   Debug.Log(hit.collider.name);
+          //     }
+         //   }
+        // } 
+
+
+      //  }
+
     }
 
-      //  else
-      // {
+      bool islegalPosition() // collider test
+        {
 
-      //Vector3 m = Input.mousePosition;
-     //   m = new Vector3(m.x, m.y, transform.position.y);
-  // Vector3 p = camera.ScreenToWorldPoint(m);
-
-
-      //   if(Input.GetMouseButtonDown(0))
-     //    {
-       //       RaycastHit hit = new RaycastHit();
-      //       Ray ray = new Ray(new Vector3(p.x,8,p.z),Vector3.down);
-    
-      //      if(Physics.Raycast(ray,out hit ,Mathf.Infinity , buildingsMask)) //This is when you touch a building / click on 
-       //       {
-       //             Debug.Log(hit.collider.name);
-       //        }
-      //      }
-       //}
-
-
-  //  }
-
-
-   bool islegalPosition() // collider test
-    {
-
-       if(placeBuilding.colliders.Count > 0)
-       {
-            return false;
-       }
+            if (placeBuilding.colliders.Count > 0)
+           {
+             return false;
+           }
 
             return true;
-    }
+        }
+
+    
 
     public void SetItem(GameObject b)
     {

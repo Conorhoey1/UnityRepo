@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 using UnityEngine.UI;
 
 [System.Serializable]
@@ -28,7 +29,7 @@ public class PlayersArea : MonoBehaviour
     public SpawnObjects spawnObjects;
     public StatManager statsManager;
     public UpgradeBuilds upgradeBuild;
-   //public PlaceBuilding placeBuilding;
+   public PlaceBuilding placeBuilding;
 
     //Area Variables
     //public static string areaName; // need a input box when user unlocks an area
@@ -85,7 +86,10 @@ public class PlayersArea : MonoBehaviour
         //  GameObject pa = new GameObject();
         //  pa.AddComponent<PlayersArea>();
 
-       spawnObjects = GetComponent<SpawnObjects>();
+     //  spawnObjects = GetComponent<SpawnObjects>();
+
+        spawnObjects = GameObject.FindObjectOfType<SpawnObjects>();
+ 
 
     }
 
@@ -99,7 +103,6 @@ public class PlayersArea : MonoBehaviour
 
     public void OnGUI()
     {
-
         //This will display button to choose which building, one under the other
         for(int i = 0; i <buildings.Length; i++)
         {
