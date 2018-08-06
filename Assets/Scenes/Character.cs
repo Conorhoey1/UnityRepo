@@ -385,12 +385,12 @@ public class Character : MonoBehaviour
 
 
 
-    public void disableSpawnScript()
-    {
+    //public void disableSpawnScript()
+    //{
         // SpawnObjects
         //Not workings
        // spawn.enabled = false; //disable the script when escape is pressed
-    }
+   // }
 
    // public void MoveCamera()
    // {

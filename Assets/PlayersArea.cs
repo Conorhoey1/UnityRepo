@@ -29,7 +29,7 @@ public class PlayersArea : MonoBehaviour
     public SpawnObjects spawnObjects;
     public StatManager statsManager;
     public UpgradeBuilds upgradeBuild;
-   public PlaceBuilding placeBuilding;
+    public PlaceBuilding placeBuilding;
 
     //Area Variables
     //public static string areaName; // need a input box when user unlocks an area
@@ -48,6 +48,10 @@ public class PlayersArea : MonoBehaviour
     public int FoodAmount { get; set; }
 
     //Purchase
+    public static bool valid = false;
+    public static bool validInstantiate = false;
+    
+
     public int PriceOfAsset { get; set; }
 
     //House - Variables
@@ -63,7 +67,8 @@ public class PlayersArea : MonoBehaviour
     public static int PlayerCoin;
 
     //Building 
-    public GameObject [] buildings;
+   // public GameObject [] buildings;
+    public GameObject hut;
 
     // new PlayersArea(){ Watertype =" Water Well ", WaterAmount = 2 , PriceOfAsset = 10},
 
@@ -89,7 +94,9 @@ public class PlayersArea : MonoBehaviour
      //  spawnObjects = GetComponent<SpawnObjects>();
 
         spawnObjects = GameObject.FindObjectOfType<SpawnObjects>();
- 
+
+
+        
 
     }
 
@@ -101,17 +108,30 @@ public class PlayersArea : MonoBehaviour
         //statsManager.CheckLevelUp();
     }
 
-    public void OnGUI()
-    {
+   // public void OnGUI()
+    //{
+
+      //  buildHouse();
         //This will display button to choose which building, one under the other
-        for(int i = 0; i <buildings.Length; i++)
-        {
-            if(GUI.Button(new Rect(Screen.width/20 , Screen.height/12 * i, 100,30), buildings[i].name))
-            {
-                spawnObjects.SetItem(buildings[i]);
-            }
-        }
-    }
+     //   for (int i = 0; i < buildings.Length; i++)
+     //   {
+            //if (GUI.Button(new Rect(Screen.width / 20, Screen.height / 12 * i, 100, 30), buildings[i].name))
+           // {
+                //check if they can purchase then placeBuild
+             //   if (valid == true)
+             //   {
+                   // spawnObjects.SetItem(buildings[i]);
+                
+              //  }
+
+             //   else if(valid)
+           //     {
+                  //  Debug.Log("YPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+           //     }
+          //  }
+
+      //  }
+     //}
 
     public void buildHouse()
     {
@@ -128,11 +148,11 @@ public class PlayersArea : MonoBehaviour
         //Area levels will have different rights to build and more to unlock
         //e.g area level 1 until 2 = 5 wells 
 
-        bool valid = false;
+        //bool valid = false;
 
         houseCounter++;
 
-        string userInput = "";
+       // string userInput = "";
 
         Debug.Log("House selected");
 
@@ -143,23 +163,23 @@ public class PlayersArea : MonoBehaviour
             //Would you like to upgrade these houses to an estate for 1300 Coins
 
             //Benefits - Community spirt and happiness increase
-            Debug.Log("Would you like to upgrade these houses to an estate for 1300 Coins");
+          //  Debug.Log("Would you like to upgrade these houses to an estate for 1300 Coins");
 
             //User input but we want it to be a button yes or no buttons
-            if(userInput == "Yes") 
-            {
+          //  if(userInput == "Yes") 
+          //  {
                 //Yes
-                CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - 1300;
+             //   CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - 1300;
 
                 //Upgrade House build
-                upgradeBuild.UpgradeHouseBuild();
-            }
+             //   upgradeBuild.UpgradeHouseBuild();
+           // }
 
-            else if(userInput == "No")
-            {
+         //   else if(userInput == "No")
+           // {
                 //No
-                Debug.Log("Purchase cancelled");
-            }
+           //     Debug.Log("Purchase cancelled");
+          //  }
             
         }
 
@@ -178,15 +198,15 @@ public class PlayersArea : MonoBehaviour
             else
             {
                 Debug.Log("Not enough funds - 10 coins are needed");
+
+                valid = false;
             }
 
-            //Purchase confirmation + Creation 
-
-            //Creation of house(Prefab graphic)
+          
             //Timer of how often water gens
         }
 
-        if (valid == true)
+        if (valid == true) // IF the player has enough funds  -  stats and update stats - Instantiate prefab
         {
 
             Debug.Log("creating House");
@@ -215,10 +235,20 @@ public class PlayersArea : MonoBehaviour
             //Increase Area Level
             statsManager.increaseAreaLevel();
 
-            //Create House / Prefab on screen
-        //    spawnObjects.Update();
+            validInstantiate = true; // Allows SpawnObject Script to call method which spawns prefab
 
-          
+
+            //Create House / Prefab on screen
+            spawnObjects.SetItem(hut);
+
+      
+
+
+        }
+
+        else // prevents prefab instantiate
+        {
+            Debug.Log("Unable to spawn due player not having funds");
         }
 
 

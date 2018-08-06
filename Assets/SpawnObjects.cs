@@ -20,81 +20,107 @@ public class SpawnObjects : MonoBehaviour
     //public Camera camera;
     //Camera camera = GetComponent<Camera>();
 
+
+    public PlayersArea playersArea;
+
     public void Start()
     {
-       //Camera camera = GetComponent<Camera>();
+        //Camera camera = GetComponent<Camera>();
+
     }
 
     public void Update()
     {
 
+        if(PlayersArea.validInstantiate == true )
+        {
+            testmethod();
+        }
+
+       
+       
+    }
+
+
+    public void testmethod()
+    {
+        //try fix  position of prefab as its too much right of the cursor
+
+
         Camera camera = GetComponent<Camera>();
 
-       Vector3 m = Input.mousePosition;
-       m = new Vector3(m.x, m.y, transform.position.y);
-       Vector3 p = camera.ScreenToWorldPoint(m);
+        Vector3 m = Input.mousePosition;
+        m = new Vector3(m.x, m.y, transform.position.y);
+        Vector3 p = camera.ScreenToWorldPoint(m);
 
         if (currentBuilding != null && !hasPlaced)
 
-           currentBuilding.position = new Vector3(p.x, 0, p.z);
+            currentBuilding.position = new Vector3(p.x, 0, p.z);
 
 
         if (Input.GetMouseButtonDown(0))
-       {
-         if (islegalPosition())
+        {
+
+            if (islegalPosition())
             {
-            // Only place object if its legal placement as in not on top of another.
-            hasPlaced = true;
+                // Only place object if its legal placement as in not on top of another.
+                hasPlaced = true;
             }
+
         }
 
 
 
-     //   else
-      //  {
-
-            // Refer -https://www.youtube.com/watch?v=OuqThz4Zc9c
-
-            //  Vector3 m = Input.mousePosition;
-            //   m = new Vector3(m.x, m.y, transform.position.y);
-            // Vector3 p = camera.ScreenToWorldPoint(m);
 
 
-       //     if(Input.GetMouseButtonDown(0))
+        //THIS is the part were you can select the object we need to do this eventually not 100% working 
+        //--------------------------------
+        //   else
+        //  {
+
+        // Refer -https://www.youtube.com/watch?v=OuqThz4Zc9c
+
+        //  Vector3 m = Input.mousePosition;
+        //   m = new Vector3(m.x, m.y, transform.position.y);
+        // Vector3 p = camera.ScreenToWorldPoint(m);
+
+
+        //     if(Input.GetMouseButtonDown(0))
         //    {
         //        RaycastHit hit = new RaycastHit();
         //         Ray ray = new Ray(new Vector3(p.x,8,p.z),Vector3.down);
-        
-         //   if(Physics.Raycast(ray,out hit ,Mathf.Infinity , buildingsMask)) //This is when you touch a building / click on 
-         //      {
-         //   Debug.Log(hit.collider.name);
-          //     }
-         //   }
+
+        //   if(Physics.Raycast(ray,out hit ,Mathf.Infinity , buildingsMask)) //This is when you touch a building / click on 
+        //      {
+        //   Debug.Log(hit.collider.name);
+        //     }
+        //   }
         // } 
 
 
-      //  }
+        //  }
 
     }
 
-      bool islegalPosition() // collider test
+    bool islegalPosition() // collider test
+    {
+
+        if (placeBuilding.colliders.Count > 0)
         {
-
-            if (placeBuilding.colliders.Count > 0)
-           {
-             return false;
-           }
-
-            return true;
+            return false;
         }
 
-    
+        return true;
 
-    public void SetItem(GameObject b)
+    }
+
+
+    public void SetItem(GameObject hut)
     {
-       Debug.Log(b.name);
-        hasPlaced = false;
-        currentBuilding = ((GameObject)Instantiate(b)).transform;
+       Debug.Log(hut.name);
+       hasPlaced = false;
+
+       currentBuilding = ((GameObject)Instantiate(hut)).transform;
        placeBuilding = currentBuilding.GetComponent<PlaceBuilding>();
     }
 
