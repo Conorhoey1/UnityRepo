@@ -16,6 +16,10 @@ public class StatManager : MonoBehaviour
     float IncreaseHungerTimeLeft = 20.0f; //seconds // Reduce
     float IncreaseThirstTimeLeft = 20.0f; //seconds // Reduce
 
+
+    bool setWaterWellTimer = false;
+
+
     public CharacterCreator cc;
 
     public Character ch;
@@ -28,6 +32,10 @@ public class StatManager : MonoBehaviour
         reduceHungerMethod();
         reduceThirstMethod();
 
+        if(setWaterWellTimer == true)
+        {
+            increaseThirstMethod();
+        }
 
 
     }
@@ -48,6 +56,9 @@ public class StatManager : MonoBehaviour
             Debug.Log("timer done");
 
             CharacterCreator.currentHunger = CharacterCreator.currentHunger - 1; // Subtract Hunger
+
+
+
 
             ch.setHunger(); // Set Label Method
 
@@ -80,7 +91,7 @@ public class StatManager : MonoBehaviour
 
         if (ReduceThirstTimeLeft <= 0)
         {
-            Debug.Log("timer done");
+            Debug.Log("timer done ");
 
             CharacterCreator.currentThirst = CharacterCreator.currentThirst - 1; // Subtract Hunger
 
@@ -100,7 +111,7 @@ public class StatManager : MonoBehaviour
 
         Debug.Log("Time Left:" + Mathf.Round(IncreaseHungerTimeLeft)); //Test - Correct
 
-        if (IncreaseHungerTimeLeft < 0)
+        if (IncreaseHungerTimeLeft <= 0)
         {
             Debug.Log("timer done");
 
@@ -117,15 +128,21 @@ public class StatManager : MonoBehaviour
     //BUG - in times left within debug
     public void increaseThirstMethod()
     {
+       
         IncreaseThirstTimeLeft -= Time.deltaTime;
 
-        Debug.Log("Time Left:" + Mathf.Round(IncreaseThirstTimeLeft)); //Test - Correct
+        setWaterWellTimer = true;
 
-        if (IncreaseThirstTimeLeft < 0)
+        Debug.Log("Time Left THIRST:" + Mathf.Round(IncreaseThirstTimeLeft)); //Test - Correct
+
+        if (IncreaseThirstTimeLeft <= 0)
         {
-            Debug.Log("timer done");
+            Debug.Log("WE R IN!!!!!!!!!");
 
-            CharacterCreator.currentThirst = CharacterCreator.currentThirst + 1; // Subtract Hunger
+            // waterWellThirstIncrease(); //Add Thirst
+            CharacterCreator.currentThirst = CharacterCreator.currentThirst + 20;
+            CharacterCreator.currentXP = CharacterCreator.currentXP + 100;
+
 
             ch.setThirst(); // Set Label Method
 
@@ -148,12 +165,15 @@ public class StatManager : MonoBehaviour
         ch.setPlayerCoin();
     }
 
-    public void waterWellThirstIncrease()
-    {
-        CharacterCreator.currentThirst = CharacterCreator.currentThirst + 3;
-        CharacterCreator.currentXP = CharacterCreator.currentXP + 100;
-        ch.setThirst();
-    }
+   
+
+ 
+
+
+
+
+
+
 
     public void cropsIncreaseHunger()
     {

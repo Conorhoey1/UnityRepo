@@ -34,7 +34,7 @@ public class SpawnObjects : MonoBehaviour
 
         if(PlayersArea.validInstantiate == true )
         {
-            testmethod();
+            SpawnPrefabMethod();
         }
 
        
@@ -42,7 +42,7 @@ public class SpawnObjects : MonoBehaviour
     }
 
 
-    public void testmethod()
+    public void SpawnPrefabMethod()
     {
         //try fix  position of prefab as its too much right of the cursor
 
@@ -122,6 +122,16 @@ public class SpawnObjects : MonoBehaviour
 
        currentBuilding = ((GameObject)Instantiate(hut)).transform;
        placeBuilding = currentBuilding.GetComponent<PlaceBuilding>();
+    }
+
+
+    public void SetItemWaterWell(GameObject waterWell)
+    {
+        Debug.Log(waterWell.name);
+        hasPlaced = false;
+
+        currentBuilding = ((GameObject)Instantiate(waterWell)).transform;
+        placeBuilding = currentBuilding.GetComponent<PlaceBuilding>();
     }
 
 }

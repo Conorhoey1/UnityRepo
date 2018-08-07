@@ -67,8 +67,10 @@ public class PlayersArea : MonoBehaviour
     public static int PlayerCoin;
 
     //Building 
-   // public GameObject [] buildings;
+    // public GameObject [] buildings;
     public GameObject hut;
+    public GameObject waterWell;
+
 
     // new PlayersArea(){ Watertype =" Water Well ", WaterAmount = 2 , PriceOfAsset = 10},
 
@@ -291,6 +293,7 @@ public class PlayersArea : MonoBehaviour
         //--------TODO-------
         //Area levels will have different rights to build and more to unlock
         //e.g area level 1 until 2 = 5 wells 
+        //WHAT HAPPENS IF THERE ARE 2 WELLS?
 
         bool valid = false;
 
@@ -338,48 +341,32 @@ public class PlayersArea : MonoBehaviour
             //Storage - Player Storage/SAVE
 
             // add Timer + add water
-            statsManager.waterWellThirstIncrease();
+
+
+            Debug.Log("WLLLLLLLLLLLLLLLLLLLLLLLLLLLLLLL");
+
+            statsManager.increaseThirstMethod();
             statsManager.PlayerLevelCheck();
 
+
+
+            validInstantiate = true; // Allows SpawnObject Script to call method which spawns prefab
+
+
+            //Create waterWell / Prefab on screen
+            spawnObjects.SetItemWaterWell(waterWell);
+        }
+
+        else // prevents prefab instantiate
+        {
+            Debug.Log("Unable to spawn due player not having funds");
         }
 
 
-       
+
     }
 
-    public void storeWaterFeatures()
-    {
-        //Area Level 1 - Build Water Well
-        // need conditions for cost etc
-        //PlayersArea water1 = new PlayersArea();
-       // water1.Watertype = "Water Well";
-       // water1.WaterLevel = 1;
-       // water1.WaterAmount = 3;
-       // water1.PriceOfAsset = 10;
-
-       // waterList.Add(water1);
-
-
-        //Area Level 2 - Build ....
-        //PlayersArea water2 = new PlayersArea();
-       // water2.Watertype = "Water 2";
-        //water2.WaterLevel = 2;
-        //water2.WaterAmount = 6;
-       // water2.PriceOfAsset = 20;
-
-       // waterList.Add(water2);
-       
-      //  PlayersArea waterWell = waterList[0];
-       // PlayersArea waterSource2 = waterList[1];
-
-        //Debug.Log("Current Balance " + coin);
-
-      //  coin = coin - water1.PriceOfAsset; //change amount? // Reduce amount
-
-       // character.setPlayerCoin();
-
-      //  Debug.Log("New balance is " + coin);
-    }
+  
 
     public void checkWaterStatus()
     {
