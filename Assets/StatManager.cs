@@ -18,6 +18,7 @@ public class StatManager : MonoBehaviour
 
 
     bool setWaterWellTimer = false;
+    bool setCropsTimer = false;
 
 
     public CharacterCreator cc;
@@ -35,6 +36,11 @@ public class StatManager : MonoBehaviour
         if(setWaterWellTimer == true)
         {
             increaseThirstMethod();
+        }
+
+        if(setCropsTimer == true)
+        {
+            increaseHungerMethod();
         }
 
 
@@ -65,16 +71,11 @@ public class StatManager : MonoBehaviour
             ReduceHungerTimeLeft = ReduceHungerTimeLeft + 10.0f; // Reset Timer
 
 
-            // repeat = true;
+           
 
         }
 
-        // if (repeat == true)
-        // {
-
-        //   Update();
-
-        // }
+       
 
 
     }
@@ -109,13 +110,16 @@ public class StatManager : MonoBehaviour
     {
         IncreaseHungerTimeLeft -= Time.deltaTime;
 
-        Debug.Log("Time Left:" + Mathf.Round(IncreaseHungerTimeLeft)); //Test - Correct
+        setCropsTimer = true;
+
+        Debug.Log("Time Left HUNGER:" + Mathf.Round(IncreaseHungerTimeLeft)); //Test - Correct
 
         if (IncreaseHungerTimeLeft <= 0)
         {
             Debug.Log("timer done");
 
-            CharacterCreator.currentHunger = CharacterCreator.currentHunger + 1; // Add Hunger
+            CharacterCreator.currentHunger = CharacterCreator.currentHunger + 20; // Add Hunger
+            CharacterCreator.currentXP = CharacterCreator.currentXP + 100;
 
             ch.setHunger(); // Set Label Method
 
@@ -164,15 +168,6 @@ public class StatManager : MonoBehaviour
         CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin + 1;
         ch.setPlayerCoin();
     }
-
-   
-
- 
-
-
-
-
-
 
 
     public void cropsIncreaseHunger()

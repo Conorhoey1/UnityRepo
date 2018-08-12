@@ -52,7 +52,7 @@ public class Character : MonoBehaviour
     public static int RequiredXP; // Required amount - used to set different amounts for higher Levels
     public static int currentXP; // This the Current Player XP Amount
 
-    //Labels
+    //Labels - Player View
     public Text NameText;
     public Text HealthText;
     public Text HungerText;
@@ -62,7 +62,7 @@ public class Character : MonoBehaviour
     public Text PlayerLevelText;
     public Text PlayerCoinText;
 
-    //Labels
+    //Labels - Player Area 
     public Text areaText;
     public Text areaLevelText;
     public Text populationText;
@@ -151,7 +151,7 @@ public class Character : MonoBehaviour
 
         PlayerPrefs.SetString("characterName" , characterName);
 
-        NameText.text = "Name: " + CharacterCreator.characterName.ToString();
+        NameText.text = CharacterCreator.characterName.ToString();
 
         PlayerPrefs.Save();
     }

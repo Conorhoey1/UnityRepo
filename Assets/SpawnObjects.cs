@@ -17,7 +17,7 @@ public class SpawnObjects : MonoBehaviour
  
 
     public LayerMask buildingsMask;
-    //public Camera camera;
+  //  public Camera cameraSpawn;
     //Camera camera = GetComponent<Camera>();
 
 
@@ -25,7 +25,7 @@ public class SpawnObjects : MonoBehaviour
 
     public void Start()
     {
-        //Camera camera = GetComponent<Camera>();
+       Camera cameraSpawn = GetComponent<Camera>();
 
     }
 
@@ -131,6 +131,15 @@ public class SpawnObjects : MonoBehaviour
         hasPlaced = false;
 
         currentBuilding = ((GameObject)Instantiate(waterWell)).transform;
+        placeBuilding = currentBuilding.GetComponent<PlaceBuilding>();
+    }
+
+    public void SetItemCrops(GameObject cropsPrefab)
+    {
+        Debug.Log(cropsPrefab.name);
+        hasPlaced = false;
+
+        currentBuilding = ((GameObject)Instantiate(cropsPrefab)).transform;
         placeBuilding = currentBuilding.GetComponent<PlaceBuilding>();
     }
 

@@ -70,11 +70,23 @@ public class PlayersArea : MonoBehaviour
     // public GameObject [] buildings;
     public GameObject hut;
     public GameObject waterWell;
+    public GameObject cropsPrefab;
 
+    public Camera camera;
 
-    // new PlayersArea(){ Watertype =" Water Well ", WaterAmount = 2 , PriceOfAsset = 10},
+    //Moving camera position  - PlayerArea to PlayerView
+    public static int movement;
+    public static bool triggerPlayerView;
+    public static bool triggerPlayerArea;
+    public GameObject GoToPlayerViewBtn;
+    public GameObject GoToPlayerAreaBtn;
 
-    // new PlayersArea(){ Watertype =" Water.. ", WaterLevel = 2 , WaterAmount = 3 , PriceOfAsset = 5}
+    //Cameras
+    //public Camera Camera;
+   // public Camera PlayerViewCamera;
+
+   
+
 
     // Use this for initialization
     void Start()
@@ -97,8 +109,14 @@ public class PlayersArea : MonoBehaviour
 
         spawnObjects = GameObject.FindObjectOfType<SpawnObjects>();
 
+        //spawnObjects.cameraSpawn = GetComponent<SpawnObjects>;
 
-        
+   
+
+      //  GoToPlayerAreaBtn.gameObject.SetActive(false);
+
+    //    PlayerViewCamera.gameObject.SetActive(false);
+
 
     }
 
@@ -481,8 +499,15 @@ public class PlayersArea : MonoBehaviour
             //Storage - Player Storage/SAVE
 
             // add Timer + add food
-            statsManager.cropsIncreaseHunger();
+            statsManager.increaseHungerMethod(); // TEMP for now ,  have a variable to change if true hunger + 5 etc
             statsManager.PlayerLevelCheck();
+
+
+            validInstantiate = true; // Allows SpawnObject Script to call method which spawns prefab
+
+
+            //Create waterWell / Prefab on screen
+            spawnObjects.SetItemCrops(cropsPrefab);
 
         }
 
@@ -496,6 +521,74 @@ public class PlayersArea : MonoBehaviour
         //Increase work
     }
 
+    public void moveCameraToPlayerView()
+    {
+
+        //Boolean value to determine which platform/View we want
+        triggerPlayerView = true;
+
+        if(triggerPlayerView == true)
+        {
+            //Move to PlayerView
+            Camera.main.transform.Translate(228, 42, -38);
+            Camera.main.transform.Rotate(-90, 0, 0);
+
+
+
+            //Disable label that are not needed
+            ch.populationText.gameObject.SetActive(false);
+            ch.areaText.gameObject.SetActive(false);
+            ch.areaTypeText.gameObject.SetActive(false);
+            ch.areaLevelText.gameObject.SetActive(false);
+
+            //Remove button that triggers this method and will then create a new button 
+            GoToPlayerViewBtn.gameObject.SetActive(false);
+            GoToPlayerAreaBtn.gameObject.SetActive(true);
+
+           // PlayerViewCamera.enabled = true;
+
+           // spawnObjects.GetComponent<Camera>().enabled = false;
+        }
+        
+
+    }
+
+
+    //Way back to PlayerArea from movement of different platforms
+    public void moveCameraToPlayerArea()
+    {
+
+        float x = 425f;
+        float y = 113f;
+        float z = 54f;
+  
+
+
+        //Boolean value to determine which platform/View we want
+        triggerPlayerArea = true;
+
+        if (triggerPlayerArea == true)
+        {
+            //Move to PlayerView
+            Camera.main.transform.Translate(x, y, z);
+            Camera.main.transform.Rotate(90, 0, 0);
+
+            //Camera.gameObject.SetActive(true);
+
+
+
+            //Disable label that are not needed
+            ch.populationText.gameObject.SetActive(true);
+            ch.areaText.gameObject.SetActive(true);
+            ch.areaTypeText.gameObject.SetActive(true);
+            ch.areaLevelText.gameObject.SetActive(true);
+
+            //Remove button that triggers this method and will then create a new button 
+           GoToPlayerViewBtn.gameObject.SetActive(false);
+
+           // spawnObjects.GetComponent<Camera>().enabled = true;
+        }
+    }
 
   
 
