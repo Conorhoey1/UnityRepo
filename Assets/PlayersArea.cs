@@ -12,6 +12,10 @@ public class PlayersArea : MonoBehaviour
     //Can we get player stat at the top?
     // TImers run in all scenes 
 
+        //Todo
+        //PlayerArea to PlayerView- still has a bug
+        //Position of prefabs has a bug able to do legal postions
+
     //This script will be used to generate an area for the player in which they run/own
     //A town will have stats such population etc
     //Rules
@@ -41,7 +45,7 @@ public class PlayersArea : MonoBehaviour
     public string Watertype { get; set; } // well?? , river>?
     public int WaterLevel { get; set; }
     public int WaterAmount { get; set; }
-    
+
     //Area Resources - Food
     public string Foodtype { get; set; } // well?? , river>?
     public int FoodLevel { get; set; }
@@ -50,7 +54,7 @@ public class PlayersArea : MonoBehaviour
     //Purchase
     public static bool valid = false;
     public static bool validInstantiate = false;
-    
+
 
     public int PriceOfAsset { get; set; }
 
@@ -72,20 +76,22 @@ public class PlayersArea : MonoBehaviour
     public GameObject waterWell;
     public GameObject cropsPrefab;
 
-    public Camera camera;
 
     //Moving camera position  - PlayerArea to PlayerView
     public static int movement;
     public static bool triggerPlayerView;
     public static bool triggerPlayerArea;
+
     public GameObject GoToPlayerViewBtn;
     public GameObject GoToPlayerAreaBtn;
 
     //Cameras
-    //public Camera Camera;
-   // public Camera PlayerViewCamera;
+    public static int cameraPosition;
 
-   
+    public Camera SpawnObjects;
+    public Camera PlayerViewCamera;
+
+
 
 
     // Use this for initialization
@@ -105,17 +111,13 @@ public class PlayersArea : MonoBehaviour
         //  GameObject pa = new GameObject();
         //  pa.AddComponent<PlayersArea>();
 
-     //  spawnObjects = GetComponent<SpawnObjects>();
+        //  spawnObjects = GetComponent<SpawnObjects>();
 
         spawnObjects = GameObject.FindObjectOfType<SpawnObjects>();
 
-        //spawnObjects.cameraSpawn = GetComponent<SpawnObjects>;
 
-   
 
-      //  GoToPlayerAreaBtn.gameObject.SetActive(false);
 
-    //    PlayerViewCamera.gameObject.SetActive(false);
 
 
     }
@@ -123,35 +125,40 @@ public class PlayersArea : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
+     
 
         //statsManager.CheckLevelUp();
+
+
+        PlayerViewCamera.gameObject.SetActive(false);
+
+
     }
 
-   // public void OnGUI()
+    // public void OnGUI()
     //{
 
-      //  buildHouse();
-        //This will display button to choose which building, one under the other
-     //   for (int i = 0; i < buildings.Length; i++)
-     //   {
-            //if (GUI.Button(new Rect(Screen.width / 20, Screen.height / 12 * i, 100, 30), buildings[i].name))
-           // {
-                //check if they can purchase then placeBuild
-             //   if (valid == true)
-             //   {
-                   // spawnObjects.SetItem(buildings[i]);
-                
-              //  }
+    //  buildHouse();
+    //This will display button to choose which building, one under the other
+    //   for (int i = 0; i < buildings.Length; i++)
+    //   {
+    //if (GUI.Button(new Rect(Screen.width / 20, Screen.height / 12 * i, 100, 30), buildings[i].name))
+    // {
+    //check if they can purchase then placeBuild
+    //   if (valid == true)
+    //   {
+    // spawnObjects.SetItem(buildings[i]);
 
-             //   else if(valid)
-           //     {
-                  //  Debug.Log("YPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
-           //     }
-          //  }
+    //  }
 
-      //  }
-     //}
+    //   else if(valid)
+    //     {
+    //  Debug.Log("YPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
+    //     }
+    //  }
+
+    //  }
+    //}
 
     public void buildHouse()
     {
@@ -172,7 +179,7 @@ public class PlayersArea : MonoBehaviour
 
         houseCounter++;
 
-       // string userInput = "";
+        // string userInput = "";
 
         Debug.Log("House selected");
 
@@ -183,24 +190,24 @@ public class PlayersArea : MonoBehaviour
             //Would you like to upgrade these houses to an estate for 1300 Coins
 
             //Benefits - Community spirt and happiness increase
-          //  Debug.Log("Would you like to upgrade these houses to an estate for 1300 Coins");
+            //  Debug.Log("Would you like to upgrade these houses to an estate for 1300 Coins");
 
             //User input but we want it to be a button yes or no buttons
-          //  if(userInput == "Yes") 
-          //  {
-                //Yes
-             //   CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - 1300;
+            //  if(userInput == "Yes") 
+            //  {
+            //Yes
+            //   CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - 1300;
 
-                //Upgrade House build
-             //   upgradeBuild.UpgradeHouseBuild();
-           // }
+            //Upgrade House build
+            //   upgradeBuild.UpgradeHouseBuild();
+            // }
 
-         //   else if(userInput == "No")
-           // {
-                //No
-           //     Debug.Log("Purchase cancelled");
-          //  }
-            
+            //   else if(userInput == "No")
+            // {
+            //No
+            //     Debug.Log("Purchase cancelled");
+            //  }
+
         }
 
         else
@@ -222,7 +229,7 @@ public class PlayersArea : MonoBehaviour
                 valid = false;
             }
 
-          
+
             //Timer of how often water gens
         }
 
@@ -230,13 +237,13 @@ public class PlayersArea : MonoBehaviour
         {
 
             Debug.Log("creating House");
-            
+
 
 
             //Storage - Player Storage/SAVE
 
             // Population check ?? add people into it?
-          
+
             statsManager.PopulationCheck();
 
             //Update AreaType Label - GUI
@@ -244,10 +251,10 @@ public class PlayersArea : MonoBehaviour
 
             CharacterCreator.currentPopulation = CharacterCreator.currentPopulation + 1;
             Debug.Log(CharacterCreator.currentPopulation);
-            
+
             //Update Population Label - GUI
             ch.setAreaPopulation();
-            
+
             //XP
             CharacterCreator.currentXP = CharacterCreator.currentXP + 100;
             statsManager.PlayerLevelCheck();
@@ -261,7 +268,7 @@ public class PlayersArea : MonoBehaviour
             //Create House / Prefab on screen
             spawnObjects.SetItem(hut);
 
-      
+
 
 
         }
@@ -278,7 +285,7 @@ public class PlayersArea : MonoBehaviour
 
     }
 
-    
+
 
 
 
@@ -315,7 +322,7 @@ public class PlayersArea : MonoBehaviour
 
         bool valid = false;
 
-        
+
 
         waterWellCounter++;
 
@@ -334,7 +341,7 @@ public class PlayersArea : MonoBehaviour
             {
                 CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - 10;
                 ch.setPlayerCoin();
-           
+
                 valid = true;
                 Debug.Log("Water Well purchase");
             }
@@ -384,31 +391,31 @@ public class PlayersArea : MonoBehaviour
 
     }
 
-  
+
 
     public void checkWaterStatus()
     {
         //Check population
 
-       // if (Population == 1) // Check if population is enough to build
-     //   {
-         //   Debug.Log("Population is good");
+        // if (Population == 1) // Check if population is enough to build
+        //   {
+        //   Debug.Log("Population is good");
 
-          //  if(coin == 0) // Check coin balance
-           // {
-               // Debug.Log("Current Balance " + coin);
+        //  if(coin == 0) // Check coin balance
+        // {
+        // Debug.Log("Current Balance " + coin);
 
-              //  coin = coin - water1.PriceOfAsset; //change amount? // Reduce amount
+        //  coin = coin - water1.PriceOfAsset; //change amount? // Reduce amount
 
-               //  character.setPlayerCoin();
+        //  character.setPlayerCoin();
 
-              //  Debug.Log("New balance is " + coin);
+        //  Debug.Log("New balance is " + coin);
 
-      //   Update method ch 
+        //   Update method ch 
 
-          //  }
-       // }
-       
+        //  }
+        // }
+
     }
 
     public void waterGeneration()
@@ -426,7 +433,7 @@ public class PlayersArea : MonoBehaviour
     }
 
 
-    
+
 
     //------------ Food --------------------------
 
@@ -523,33 +530,47 @@ public class PlayersArea : MonoBehaviour
 
     public void moveCameraToPlayerView()
     {
+        cameraPosition = 0;
 
-        //Boolean value to determine which platform/View we want
-        triggerPlayerView = true;
-
-        if(triggerPlayerView == true)
+        if (cameraPosition == 0)
         {
-            //Move to PlayerView
-            Camera.main.transform.Translate(228, 42, -38);
-            Camera.main.transform.Rotate(-90, 0, 0);
+            cameraPosition = cameraPosition + 1;
+            //Boolean value to determine which platform/View we want
+            triggerPlayerView = true;
 
 
 
-            //Disable label that are not needed
-            ch.populationText.gameObject.SetActive(false);
-            ch.areaText.gameObject.SetActive(false);
-            ch.areaTypeText.gameObject.SetActive(false);
-            ch.areaLevelText.gameObject.SetActive(false);
+            if (triggerPlayerView == true)
+            {
+                //Move to PlayerView Manual
+                Camera.main.transform.Translate(228, 42, -38);
+                Camera.main.transform.Rotate(-90, 0, 0);
 
-            //Remove button that triggers this method and will then create a new button 
-            GoToPlayerViewBtn.gameObject.SetActive(false);
-            GoToPlayerAreaBtn.gameObject.SetActive(true);
 
-           // PlayerViewCamera.enabled = true;
 
-           // spawnObjects.GetComponent<Camera>().enabled = false;
+
+                //Disable label that are not needed
+                ch.populationText.gameObject.SetActive(false);
+                ch.areaText.gameObject.SetActive(false);
+                ch.areaTypeText.gameObject.SetActive(false);
+                ch.areaLevelText.gameObject.SetActive(false);
+
+                //Remove button that triggers this method and will then create a new button 
+                GoToPlayerViewBtn.gameObject.SetActive(false);
+                GoToPlayerAreaBtn.gameObject.SetActive(true);
+
+            }
         }
-        
+
+
+
+
+
+
+
+
+
+
 
     }
 
@@ -557,42 +578,60 @@ public class PlayersArea : MonoBehaviour
     //Way back to PlayerArea from movement of different platforms
     public void moveCameraToPlayerArea()
     {
-
-        float x = 425f;
-        float y = 113f;
-        float z = 54f;
-  
+        cameraPosition = cameraPosition + 1;
+        Debug.Log(cameraPosition + "YAAAAAAAAAAAAAAAAAAAAAddd");
 
 
-        //Boolean value to determine which platform/View we want
-        triggerPlayerArea = true;
 
-        if (triggerPlayerArea == true)
+
+        if (cameraPosition == 1)
         {
-            //Move to PlayerView
-            Camera.main.transform.Translate(x, y, z);
-            Camera.main.transform.Rotate(90, 0, 0);
 
-            //Camera.gameObject.SetActive(true);
+            //Boolean value to determine which platform/View we want
+            triggerPlayerArea = true;
 
 
+            float x = 425f;
+            float y = 113f;
+            float z = 54f;
 
-            //Disable label that are not needed
-            ch.populationText.gameObject.SetActive(true);
-            ch.areaText.gameObject.SetActive(true);
-            ch.areaTypeText.gameObject.SetActive(true);
-            ch.areaLevelText.gameObject.SetActive(true);
+            if (triggerPlayerArea == true)
+            {
+                //Move to PlayerView - Manual
+                Camera.main.transform.Translate(x, y, z);
+                Camera.main.transform.Rotate(90, 0, 0);
 
-            //Remove button that triggers this method and will then create a new button 
-           GoToPlayerViewBtn.gameObject.SetActive(false);
+                //PlayerView no longer active
+                //PlayerViewCamera.gameObject.SetActive(false);
 
-           // spawnObjects.GetComponent<Camera>().enabled = true;
+
+
+
+
+                //Disable label that are not needed
+                ch.populationText.gameObject.SetActive(true);
+                ch.areaText.gameObject.SetActive(true);
+                ch.areaTypeText.gameObject.SetActive(true);
+                ch.areaLevelText.gameObject.SetActive(true);
+
+                //Remove button that triggers this method and will then create a new button 
+                GoToPlayerViewBtn.gameObject.SetActive(true);
+
+
+
+            }
+
+            else if (cameraPosition >= 2)
+            {
+                Debug.Log("BOO");
+
+
+            }
+
         }
+
+
+
     }
-
-  
-
-
-
 }
 

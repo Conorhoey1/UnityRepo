@@ -106,7 +106,7 @@ public class Character : MonoBehaviour
 
     void Update()
     {
-       
+        //checks for updates on stats
 
         setName();
        //getName();
@@ -349,37 +349,7 @@ public class Character : MonoBehaviour
     }
 
 
-    public void onSubmit()
-    {
-
-        //THIS IS A TEST METHOD 
-        Health = CharacterCreator.startingHealth - 1;
-        Debug.Log(Health);
-
-        Hunger = CharacterCreator.startingHunger - 1;
-        Debug.Log(Hunger);
-
-        Thirst = CharacterCreator.startingThirst - 1;
-        Debug.Log(Thirst);
-
-        Respect = CharacterCreator.startingRespect - 1;
-        Debug.Log(Respect);
-
-        Happiness = CharacterCreator.startingHappiness - 1;
-        Debug.Log(Happiness);
-        
-        setHealth();
-        setHealth();
-        setHunger();
-        setThirst();
-        setRespect(); // COuld be the problem maybe only in start
-        setHappiness();
-
-        stats.increasePlayerLevel();
-        stats.increasePlayerCoin();
-
-
-    }
+   
 
    
 
