@@ -5,8 +5,12 @@ using UnityEngine.UI;
 
 
 [System.Serializable]
+
+
+//Upgrade for all Houses/Roads
 public class UpgradeBuilds : MonoBehaviour
 {
+
 
     //Scripts
     public CharacterCreator ch;
@@ -98,6 +102,7 @@ public class UpgradeBuilds : MonoBehaviour
     {
         string estateLevel = PlayerPrefs.GetString("EstateLevel");
     }
+
     public void UpgradeHouseBuild()
     {
         //Currently you can only build 12 houses
@@ -106,7 +111,9 @@ public class UpgradeBuilds : MonoBehaviour
         //Purchase and Create
         //Reset houseCounter(CharacterCreator) , to allow more houses to be built
 
-        //Create Estate Object
+        //Create Estate Objec
+        // --Spawn prefab 
+        // --Road prefab
 
         //Display Text box to allow user to assign string to variable - string estateName;
 

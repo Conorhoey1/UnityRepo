@@ -9,7 +9,7 @@ public class Character : MonoBehaviour
 {
     //ToDo
 
-   
+
     // Timers needs to be offline / app closed + save
     // variables cannot go over 100
     // disable script Method
@@ -22,12 +22,36 @@ public class Character : MonoBehaviour
 
     // StatManager will be used for everything
 
-        // Area player owns - start town 
-        //Position camera 
-
-     
+    // Area player owns - start town 
+    //Position camera 
 
 
+    // ---- Graphics ----
+    //UI 
+    //Prefabs for each object you can build
+    //Player prefab
+    //Drop down for purchase list
+    //Breed animals 
+    //Provide milk from cow , sell for money
+    //Animals heath or any stats
+    //Store animal in shed 
+    //Ablity to replace the cow 
+    //Shop
+    //popup and menus 
+
+
+    // ---- Code ----
+    // Fix switch camera and be able to go back to playerArea from playerView
+    //XP Generation and Ranking up system
+    // User input and validation , Error/Crash control
+    // Mobile
+    //Save Object placement - SaveManager
+    //Fishing Mini-Game
+    //Better camera angle  - zoom and view object
+    //Store animal in fencing / shed
+    // ablity to move animals  - Barriers
+    //Shop - Employees pay timer and income pay timer
+    //More objects
 
     private static string characterName;
     private static string gender;

@@ -9,6 +9,8 @@ using UnityEngine.UI;
 public class CharacterCreator : MonoBehaviour
 {
 
+    //Base Class
+
     public InputField InputName;
     public InputField InputArea;
 
@@ -44,14 +46,13 @@ public class CharacterCreator : MonoBehaviour
     public static int RequiredXP; // Required amount - used to set different amounts for higher Levels
     public static int currentXP; // This the Current Player XP Amount
 
-    //Stats - Materials
-    public static int wood;
-    public static int coal;
-    //public static int 
-    public static int fish;
-    public static int apples;
 
-    
+ 
+
+
+
+
+
 
     public void onSubmit(string scenename)
     {
@@ -109,5 +110,7 @@ public class CharacterCreator : MonoBehaviour
         Debug.Log("Gender: " + gender);
 
     }
+
+   
 
 }

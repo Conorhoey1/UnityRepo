@@ -6,7 +6,7 @@ using UnityEngine.UI;
 [System.Serializable]
 
 public class PlayersArea : MonoBehaviour
-{
+{ 
     //Scene
     //Map 
     //Can we get player stat at the top?
@@ -35,11 +35,7 @@ public class PlayersArea : MonoBehaviour
     public UpgradeBuilds upgradeBuild;
     public PlaceBuilding placeBuilding;
 
-    //Area Variables
-    //public static string areaName; // need a input box when user unlocks an area
-    //public static int AreaLevel;
-    //public static int Population;
-    //public static string areaType;
+  
 
     //Area Resources - Water
     public string Watertype { get; set; } // well?? , river>?
@@ -92,75 +88,222 @@ public class PlayersArea : MonoBehaviour
     public Camera PlayerViewCamera;
 
 
+    //Purchase UI 
+    public Button PurchaseBtn;
+    public GameObject PurchaseList; //Panel
+    public Text ObjectTypeText;
+    public Text DescriptionText;
+    public Button YesPurchaseBtn;
+    public Button NoPurchaseBtn;
+    public bool BtnClicked;
+
+
+    //Variables for Object Effects
+    public string ObjectType { get; set; } //Name - identifier
+    public string Text { get; set; } // Used for DescriptionText Label
+    public int EffectOnStatHealth { get; set; }
+    public int EffectOnStatHunger { get; set; }
+    public int EffectOnStatThirst { get; set; }
+    public int EffectOnStatRespect { get; set; }
+    public int EffectOnStatAreaHappiness { get; set; }
+    public int EffectOnStatPopulation { get; set; }
+    public int EffectOnStatCoin { get; set; }
+
+
+
+    //Variables for Object Effects
+    // public string WaterObjectType { get; set; } //Name - identifier
+    //public string WaterText { get; set; } // Used for DescriptionText Label
+
+
+    //List for Purchase Objects
+    List<PlayersArea> purchaseWaterObjects = new List<PlayersArea>();
+    List<PlayersArea> purchaseBuildingObjects = new List<PlayersArea>();
+    List<PlayersArea> purchaseCropsObjects = new List<PlayersArea>();
+
+
+
 
 
     // Use this for initialization
     void Start()
     {
-        //  areaName = CharacterCreator.areaName;
-        // AreaLevel = CharacterCreator.AreaLevel = 1;
-        //Population = CharacterCreator.Population = 1;// 1???
-        // areaType = CharacterCreator.areaType = "";
-        // creates 3 then quits??
-
-        // setAreaName();
-        //  setAreaLevel();
-        //  setPopulation();
-        //  setAreaType();
-
-        //  GameObject pa = new GameObject();
-        //  pa.AddComponent<PlayersArea>();
-
-        //  spawnObjects = GetComponent<SpawnObjects>();
 
         spawnObjects = GameObject.FindObjectOfType<SpawnObjects>();
-
-
-
-
-
-
+        possiblePurchases();
     }
 
     // Update is called once per frame
     void Update()
     {
-     
 
         //statsManager.CheckLevelUp();
-
-
         PlayerViewCamera.gameObject.SetActive(false);
-
 
     }
 
-    // public void OnGUI()
-    //{
+   
+    //----------------------------------------PURCHASE OBJECTS--------------------------------------------
+    
+    //This will be used to instatiate PurchaseList when purchase button is clicked
+    //List of buttons will appear
+    public void menuPurchaseList()
+    {
+        PurchaseList.gameObject.SetActive(true);
 
-    //  buildHouse();
-    //This will display button to choose which building, one under the other
-    //   for (int i = 0; i < buildings.Length; i++)
-    //   {
-    //if (GUI.Button(new Rect(Screen.width / 20, Screen.height / 12 * i, 100, 30), buildings[i].name))
-    // {
-    //check if they can purchase then placeBuild
-    //   if (valid == true)
-    //   {
-    // spawnObjects.SetItem(buildings[i]);
+        PurchaseBtn.gameObject.SetActive(false);
+    }
 
-    //  }
+    //This will retieve the object type and text and display below
+    public void onClickViewWellPurchase() //Water Well View
+    {
+        PurchaseBtn.gameObject.SetActive(false);
 
-    //   else if(valid)
-    //     {
-    //  Debug.Log("YPPPPPPPPPPPPPPPPPPPPPPPPPPPPP");
-    //     }
-    //  }
+        ObjectTypeText.text = purchaseWaterObjects[0].ObjectType.ToString(); // Name of the object
 
-    //  }
-    //}
+        DescriptionText.text = purchaseWaterObjects[0].Text.ToString(); //Description
 
-    public void buildHouse()
+        //Confirm purchase which will be a Tick button and No for a X button
+
+        YesPurchaseBtn.gameObject.SetActive(true);
+
+        YesPurchaseBtn.onClick.AddListener(CreateWaterWell); //Spawn Prefab Method
+
+        YesPurchaseBtn.onClick.AddListener(resetGUI); //Remove UI components method
+
+        NoPurchaseBtn.gameObject.SetActive(true);
+
+        NoPurchaseBtn.onClick.AddListener(resetGUI); //Remove UI components method
+
+    }
+
+    //This will retieve the object type and text and display below
+    public void onClickViewHutPurchase() //Hut View
+    {
+        PurchaseBtn.gameObject.SetActive(false);
+
+        ObjectTypeText.text = purchaseBuildingObjects[0].ObjectType.ToString(); // Name of the object
+
+        DescriptionText.text = purchaseBuildingObjects[0].Text.ToString(); //Description
+
+        //Confirm purchase which will be a Tick button and No for a X button
+
+        YesPurchaseBtn.gameObject.SetActive(true);
+
+        YesPurchaseBtn.onClick.AddListener(buildHouse); //Spawn Prefab Method
+
+        YesPurchaseBtn.onClick.AddListener(resetGUI); //Remove UI components method
+
+        NoPurchaseBtn.gameObject.SetActive(true);
+
+        NoPurchaseBtn.onClick.AddListener(resetGUI); //Remove UI components method
+
+    }
+
+
+    //This will retieve the object type and text and display below
+    public void onClickViewCropsPurchase() //Crops View
+    {
+        PurchaseBtn.gameObject.SetActive(false);
+
+        ObjectTypeText.text = purchaseBuildingObjects[0].ObjectType.ToString(); // Name of the object
+
+        DescriptionText.text = purchaseBuildingObjects[0].Text.ToString(); //Description
+
+        //Confirm purchase which will be a Tick button and No for a X button
+
+        YesPurchaseBtn.gameObject.SetActive(true);
+
+        YesPurchaseBtn.onClick.AddListener(CreateCrops); //Spawn Prefab Method
+
+        YesPurchaseBtn.onClick.AddListener(resetGUI); //Remove UI components method
+
+        NoPurchaseBtn.gameObject.SetActive(true);
+
+        NoPurchaseBtn.onClick.AddListener(resetGUI); //Remove UI components method
+
+    }
+
+
+
+    //---------------------------------------------------------------------------------------------------------------------------------
+    //This method will be used to close purchase list depending on the button they press as this could be used for a top right X button
+    public void resetGUI()
+    {
+        BtnClicked = true;
+
+        PurchaseList.gameObject.SetActive(false);
+
+        PurchaseBtn.gameObject.SetActive(true);
+
+        YesPurchaseBtn.onClick.RemoveAllListeners();
+
+        NoPurchaseBtn.onClick.RemoveAllListeners();
+    }
+
+    
+    //----------------------------------------------------------------------------------------------------------------------------------
+
+
+
+    public void possiblePurchases()
+    {
+
+        //This will be used to set all objects
+        //this is be link to a button so like they can choose from the list
+        //Each object will have set values store in array list
+
+        //Possible Objects to purchase
+
+        //WaterWell
+        //Upgrades for house
+        //Stores
+        //Church
+        //Road
+        //Crops 
+        //Animals 
+        //Sheds
+        //fences
+        //Plants
+        //Technology 
+        //Army
+        //Weapons
+
+        //------------Possible Purchases--------
+
+
+        //------Animal List------
+
+
+
+
+        //---Water Object List---
+        purchaseWaterObjects.Add(new PlayersArea { ObjectType = "Well", Text = "This is a water well that can be used to ....... - Cost: 100 Coins", EffectOnStatCoin = 10, EffectOnStatAreaHappiness = 5 });
+
+
+
+        //------Plants / Plant Crops List------
+         purchaseCropsObjects.Add(new PlayersArea { ObjectType = "Crops", Text = " .. , , effects = ... ,  - Cost: 10 Coins", EffectOnStatCoin = 10, EffectOnStatAreaHappiness = 5 });
+
+
+
+
+
+        //------Building List------
+
+        //Build Hut
+         purchaseBuildingObjects.Add(new PlayersArea { ObjectType = "Hut", Text = " Hut ... - Cost: 50 Coins", EffectOnStatCoin = 50, EffectOnStatAreaHappiness = 5 });
+        //General Store
+         purchaseBuildingObjects.Add(new PlayersArea { ObjectType = "General Store", Text = " .. , Regalar income however there is a cost as you must pay your employees - Cost: 150 Coins", EffectOnStatCoin = 150, EffectOnStatAreaHappiness = 5 });
+
+    }
+
+
+
+
+    //-----------------------------Methods to call for Objects------------------------------------------
+
+    public void buildHouse() //Change name to hut or something more generic
     {
         //This is called when user wants to build house
         // Must have 50 coins
@@ -216,7 +359,7 @@ public class PlayersArea : MonoBehaviour
             //Purchase + funds Check
             if (CharacterCreator.currentPlayerCoin >= 10)
             {
-                CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - 10;
+                CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - purchaseWaterObjects[0].EffectOnStatCoin;
                 ch.setPlayerCoin();
 
                 valid = true;
@@ -340,6 +483,9 @@ public class PlayersArea : MonoBehaviour
             if (CharacterCreator.currentPlayerCoin >= 10)
             {
                 CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - 10;
+
+
+                
                 ch.setPlayerCoin();
 
                 valid = true;
@@ -479,7 +625,7 @@ public class PlayersArea : MonoBehaviour
             //Purchase + funds Check
             if (CharacterCreator.currentPlayerCoin >= 10)
             {
-                CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - 10;
+                CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - 10; //=-.CoinList[54]
                 ch.setPlayerCoin();
 
                 valid = true;
