@@ -274,13 +274,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 373993616}
-  m_RootOrder: 0
+  m_Father: {fileID: 222481196}
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 23.8, y: -19}
-  m_SizeDelta: {x: 95.48, y: 25.21}
+  m_AnchoredPosition: {x: 78.87, y: 140.53}
+  m_SizeDelta: {x: 63.4, y: 29.998}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &88026640
 MonoBehaviour:
@@ -314,7 +314,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Respect:'
+  m_Text: 
 --- !u!222 &88026641
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -384,6 +384,48 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &222481195
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 222481196}
+  m_Layer: 5
+  m_Name: PlayerStats
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &222481196
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 222481195}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1046387762}
+  - {fileID: 1899534573}
+  - {fileID: 241587234}
+  - {fileID: 604795116}
+  - {fileID: 1722304012}
+  - {fileID: 1344182552}
+  - {fileID: 1791300714}
+  - {fileID: 1003341212}
+  - {fileID: 88026639}
+  m_Father: {fileID: 675492263}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &241587233
 GameObject:
   m_ObjectHideFlags: 0
@@ -407,17 +449,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 241587233}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 8}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 373993616}
-  m_RootOrder: 7
+  m_Father: {fileID: 222481196}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 386, y: -17}
-  m_SizeDelta: {x: 160, y: 30}
+  m_AnchoredPosition: {x: 331.2, y: 140.53}
+  m_SizeDelta: {x: 123.4, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &241587235
 MonoBehaviour:
@@ -451,7 +493,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Player Coin:'
+  m_Text: 
 --- !u!222 &241587236
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -775,55 +817,6 @@ CanvasRenderer:
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 363900180}
   m_CullTransparentMesh: 0
---- !u!1 &373993615
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 373993616}
-  - component: {fileID: 373993618}
-  m_Layer: 5
-  m_Name: PlayerStatsPanel
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &373993616
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 373993615}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 88026639}
-  - {fileID: 1003341212}
-  - {fileID: 1791300714}
-  - {fileID: 1344182552}
-  - {fileID: 1722304012}
-  - {fileID: 604795116}
-  - {fileID: 1899534573}
-  - {fileID: 241587234}
-  m_Father: {fileID: 1777702008}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -332.4, y: 129.9}
-  m_SizeDelta: {x: 700, y: -101.96527}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &373993618
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 373993615}
-  m_CullTransparentMesh: 1
 --- !u!1 &378924759
 GameObject:
   m_ObjectHideFlags: 0
@@ -854,7 +847,7 @@ RectTransform:
   m_Children:
   - {fileID: 496129836}
   m_Father: {fileID: 675492263}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -1154,9 +1147,9 @@ MonoBehaviour:
   statsManager: {fileID: 429071233}
   upgradeBuild: {fileID: 241710903}
   placeBuilding: {fileID: 1428246217}
-  hut: {fileID: 1415423958560654, guid: e096be0271c991f45b92afcaa5edef27, type: 2}
-  waterWell: {fileID: 1452796028514382, guid: 4c53275c017c1c5478634c36146c14c5, type: 2}
-  cropsPrefab: {fileID: 1845266988598078, guid: cd3e9330e69b73b46a13bd8c85fbbbdc,
+  hut: {fileID: 1836222040864968, guid: e096be0271c991f45b92afcaa5edef27, type: 2}
+  WaterWell: {fileID: 1791467037319908, guid: 4c53275c017c1c5478634c36146c14c5, type: 2}
+  CropsPrefab: {fileID: 1480876975445582, guid: cd3e9330e69b73b46a13bd8c85fbbbdc,
     type: 2}
   GoToPlayerViewBtn: {fileID: 761800731}
   GoToPlayerAreaBtn: {fileID: 1879149242}
@@ -1635,13 +1628,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 373993616}
-  m_RootOrder: 5
+  m_Father: {fileID: 222481196}
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -258.6, y: -18}
-  m_SizeDelta: {x: 81.22, y: 23}
+  m_AnchoredPosition: {x: -244.8, y: 141.34}
+  m_SizeDelta: {x: 69.6, y: 26.917}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &604795117
 MonoBehaviour:
@@ -1675,7 +1668,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Health:'
+  m_Text: 
 --- !u!222 &604795118
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1972,6 +1965,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
+  - {fileID: 222481196}
   - {fileID: 1339675326}
   - {fileID: 1777702008}
   - {fileID: 761800732}
@@ -2121,7 +2115,7 @@ RectTransform:
   m_Children:
   - {fileID: 336069149}
   m_Father: {fileID: 675492263}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2298,7 +2292,7 @@ RectTransform:
   m_Children:
   - {fileID: 884792823}
   m_Father: {fileID: 675492263}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -2609,13 +2603,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 373993616}
-  m_RootOrder: 1
+  m_Father: {fileID: 222481196}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 129.7, y: -18.9}
-  m_SizeDelta: {x: 102.64, y: 25.314}
+  m_AnchoredPosition: {x: 182, y: 140.58}
+  m_SizeDelta: {x: 65.2, y: 29.895}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1003341213
 MonoBehaviour:
@@ -2649,7 +2643,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Happiness:'
+  m_Text: 
 --- !u!222 &1003341214
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -2765,9 +2759,9 @@ MonoBehaviour:
   statsManager: {fileID: 429071233}
   upgradeBuild: {fileID: 241710903}
   placeBuilding: {fileID: 1428246217}
-  hut: {fileID: 1415423958560654, guid: e096be0271c991f45b92afcaa5edef27, type: 2}
-  waterWell: {fileID: 1452796028514382, guid: 4c53275c017c1c5478634c36146c14c5, type: 2}
-  cropsPrefab: {fileID: 1845266988598078, guid: cd3e9330e69b73b46a13bd8c85fbbbdc,
+  hut: {fileID: 1836222040864968, guid: e096be0271c991f45b92afcaa5edef27, type: 2}
+  WaterWell: {fileID: 1791467037319908, guid: 4c53275c017c1c5478634c36146c14c5, type: 2}
+  CropsPrefab: {fileID: 1480876975445582, guid: cd3e9330e69b73b46a13bd8c85fbbbdc,
     type: 2}
   GoToPlayerViewBtn: {fileID: 761800731}
   GoToPlayerAreaBtn: {fileID: 1879149242}
@@ -2793,6 +2787,74 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1046387761
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1046387762}
+  - component: {fileID: 1046387764}
+  - component: {fileID: 1046387763}
+  m_Layer: 5
+  m_Name: RawImage
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1046387762
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1046387761}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 222481196}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 142.20001}
+  m_SizeDelta: {x: 800, y: 49.2}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1046387763
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1046387761}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -98529514, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Texture: {fileID: 2800000, guid: 2741ba06daa91ab41a6cdd174e58bb3f, type: 3}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+--- !u!222 &1046387764
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1046387761}
+  m_CullTransparentMesh: 0
 --- !u!1 &1046901522
 GameObject:
   m_ObjectHideFlags: 0
@@ -2884,9 +2946,9 @@ MonoBehaviour:
   statsManager: {fileID: 429071233}
   upgradeBuild: {fileID: 241710903}
   placeBuilding: {fileID: 1428246217}
-  hut: {fileID: 1415423958560654, guid: e096be0271c991f45b92afcaa5edef27, type: 2}
-  waterWell: {fileID: 1452796028514382, guid: 4c53275c017c1c5478634c36146c14c5, type: 2}
-  cropsPrefab: {fileID: 1845266988598078, guid: cd3e9330e69b73b46a13bd8c85fbbbdc,
+  hut: {fileID: 1836222040864968, guid: e096be0271c991f45b92afcaa5edef27, type: 2}
+  WaterWell: {fileID: 1791467037319908, guid: 4c53275c017c1c5478634c36146c14c5, type: 2}
+  CropsPrefab: {fileID: 1480876975445582, guid: cd3e9330e69b73b46a13bd8c85fbbbdc,
     type: 2}
   GoToPlayerViewBtn: {fileID: 761800731}
   GoToPlayerAreaBtn: {fileID: 1879149242}
@@ -2964,9 +3026,9 @@ MonoBehaviour:
   statsManager: {fileID: 429071233}
   upgradeBuild: {fileID: 241710903}
   placeBuilding: {fileID: 1428246217}
-  hut: {fileID: 1415423958560654, guid: e096be0271c991f45b92afcaa5edef27, type: 2}
-  waterWell: {fileID: 1452796028514382, guid: 4c53275c017c1c5478634c36146c14c5, type: 2}
-  cropsPrefab: {fileID: 1845266988598078, guid: cd3e9330e69b73b46a13bd8c85fbbbdc,
+  hut: {fileID: 1836222040864968, guid: e096be0271c991f45b92afcaa5edef27, type: 2}
+  WaterWell: {fileID: 1791467037319908, guid: 4c53275c017c1c5478634c36146c14c5, type: 2}
+  CropsPrefab: {fileID: 1480876975445582, guid: cd3e9330e69b73b46a13bd8c85fbbbdc,
     type: 2}
   GoToPlayerViewBtn: {fileID: 761800731}
   GoToPlayerAreaBtn: {fileID: 1879149242}
@@ -3189,7 +3251,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -15, y: -43.4}
+  m_AnchoredPosition: {x: 10.5, y: -56.6}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1300337035
@@ -3225,9 +3287,9 @@ MonoBehaviour:
   statsManager: {fileID: 429071233}
   upgradeBuild: {fileID: 241710903}
   placeBuilding: {fileID: 1428246217}
-  hut: {fileID: 1415423958560654, guid: e096be0271c991f45b92afcaa5edef27, type: 2}
-  waterWell: {fileID: 1452796028514382, guid: 4c53275c017c1c5478634c36146c14c5, type: 2}
-  cropsPrefab: {fileID: 1845266988598078, guid: cd3e9330e69b73b46a13bd8c85fbbbdc,
+  hut: {fileID: 1836222040864968, guid: e096be0271c991f45b92afcaa5edef27, type: 2}
+  WaterWell: {fileID: 1791467037319908, guid: 4c53275c017c1c5478634c36146c14c5, type: 2}
+  CropsPrefab: {fileID: 1480876975445582, guid: cd3e9330e69b73b46a13bd8c85fbbbdc,
     type: 2}
   GoToPlayerViewBtn: {fileID: 761800731}
   GoToPlayerAreaBtn: {fileID: 1879149242}
@@ -3356,11 +3418,11 @@ RectTransform:
   - {fileID: 555721487}
   - {fileID: 843410948}
   m_Father: {fileID: 675492263}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -336.6, y: 117.5}
+  m_AnchoredPosition: {x: -318.8, y: 93.499985}
   m_SizeDelta: {x: 162.4, y: 37}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1344182551
@@ -3390,13 +3452,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 373993616}
-  m_RootOrder: 3
+  m_Father: {fileID: 222481196}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.49318954, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -161.94781, y: -19.6}
-  m_SizeDelta: {x: 84.5206, y: 25.31}
+  m_AnchoredPosition: {x: -156, y: 141.34}
+  m_SizeDelta: {x: 63, y: 26.915}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1344182553
 MonoBehaviour:
@@ -3430,7 +3492,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Hunger:'
+  m_Text: 
 --- !u!222 &1344182554
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4247,9 +4309,9 @@ MonoBehaviour:
   statsManager: {fileID: 429071233}
   upgradeBuild: {fileID: 241710903}
   placeBuilding: {fileID: 1428246217}
-  hut: {fileID: 1415423958560654, guid: e096be0271c991f45b92afcaa5edef27, type: 2}
-  waterWell: {fileID: 1452796028514382, guid: 4c53275c017c1c5478634c36146c14c5, type: 2}
-  cropsPrefab: {fileID: 1845266988598078, guid: cd3e9330e69b73b46a13bd8c85fbbbdc,
+  hut: {fileID: 1836222040864968, guid: e096be0271c991f45b92afcaa5edef27, type: 2}
+  WaterWell: {fileID: 1791467037319908, guid: 4c53275c017c1c5478634c36146c14c5, type: 2}
+  CropsPrefab: {fileID: 1480876975445582, guid: cd3e9330e69b73b46a13bd8c85fbbbdc,
     type: 2}
   GoToPlayerViewBtn: {fileID: 761800731}
   GoToPlayerAreaBtn: {fileID: 1879149242}
@@ -4329,9 +4391,9 @@ MonoBehaviour:
   statsManager: {fileID: 429071233}
   upgradeBuild: {fileID: 241710903}
   placeBuilding: {fileID: 1428246217}
-  hut: {fileID: 1415423958560654, guid: e096be0271c991f45b92afcaa5edef27, type: 2}
-  waterWell: {fileID: 1452796028514382, guid: 4c53275c017c1c5478634c36146c14c5, type: 2}
-  cropsPrefab: {fileID: 1845266988598078, guid: cd3e9330e69b73b46a13bd8c85fbbbdc,
+  hut: {fileID: 1836222040864968, guid: e096be0271c991f45b92afcaa5edef27, type: 2}
+  WaterWell: {fileID: 1791467037319908, guid: 4c53275c017c1c5478634c36146c14c5, type: 2}
+  CropsPrefab: {fileID: 1480876975445582, guid: cd3e9330e69b73b46a13bd8c85fbbbdc,
     type: 2}
   GoToPlayerViewBtn: {fileID: 761800731}
   GoToPlayerAreaBtn: {fileID: 1879149242}
@@ -4518,13 +4580,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 373993616}
+  m_Father: {fileID: 222481196}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -69.26001, y: -18.5}
-  m_SizeDelta: {x: 91.15, y: 25.21}
+  m_AnchoredPosition: {x: -63, y: 140.16}
+  m_SizeDelta: {x: 60.6, y: 29.27}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1722304013
 MonoBehaviour:
@@ -4558,7 +4620,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Thirst:'
+  m_Text: 
 --- !u!222 &1722304014
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -4694,9 +4756,8 @@ RectTransform:
   - {fileID: 1717379898}
   - {fileID: 1622828448}
   - {fileID: 287155253}
-  - {fileID: 373993616}
   m_Father: {fileID: 675492263}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4810,9 +4871,9 @@ MonoBehaviour:
   statsManager: {fileID: 429071233}
   upgradeBuild: {fileID: 241710903}
   placeBuilding: {fileID: 1428246217}
-  hut: {fileID: 1415423958560654, guid: e096be0271c991f45b92afcaa5edef27, type: 2}
-  waterWell: {fileID: 1452796028514382, guid: 4c53275c017c1c5478634c36146c14c5, type: 2}
-  cropsPrefab: {fileID: 1845266988598078, guid: cd3e9330e69b73b46a13bd8c85fbbbdc,
+  hut: {fileID: 1836222040864968, guid: e096be0271c991f45b92afcaa5edef27, type: 2}
+  WaterWell: {fileID: 1791467037319908, guid: 4c53275c017c1c5478634c36146c14c5, type: 2}
+  CropsPrefab: {fileID: 1480876975445582, guid: cd3e9330e69b73b46a13bd8c85fbbbdc,
     type: 2}
   GoToPlayerViewBtn: {fileID: 761800731}
   GoToPlayerAreaBtn: {fileID: 1879149242}
@@ -4878,12 +4939,12 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 373993616}
-  m_RootOrder: 2
+  m_Father: {fileID: 222481196}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 237.64001, y: -17.1}
+  m_AnchoredPosition: {x: -349.05, y: 130.21}
   m_SizeDelta: {x: 101.9, y: 25.21}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1791300715
@@ -4918,7 +4979,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 'Player Level:'
+  m_Text: 
 --- !u!222 &1791300716
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5060,7 +5121,7 @@ RectTransform:
   m_Children:
   - {fileID: 1478650073}
   m_Father: {fileID: 675492263}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -5292,13 +5353,13 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 373993616}
-  m_RootOrder: 6
+  m_Father: {fileID: 222481196}
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -315.8, y: -17.4}
-  m_SizeDelta: {x: 160.57, y: 25.314}
+  m_AnchoredPosition: {x: -357.5, y: 154.81}
+  m_SizeDelta: {x: 73.2, y: 23.987}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1899534574
 MonoBehaviour:

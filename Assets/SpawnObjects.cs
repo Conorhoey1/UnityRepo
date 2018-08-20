@@ -125,21 +125,30 @@ public class SpawnObjects : MonoBehaviour
     }
 
 
-    public void SetItemWaterWell(GameObject waterWell)
+    public void SetItemWaterWell(GameObject WaterWell)
     {
-        Debug.Log(waterWell.name);
+        Debug.Log(WaterWell.name);
         hasPlaced = false;
 
-        currentBuilding = ((GameObject)Instantiate(waterWell)).transform;
+        currentBuilding = ((GameObject)Instantiate(WaterWell)).transform;
         placeBuilding = currentBuilding.GetComponent<PlaceBuilding>();
     }
 
-    public void SetItemCrops(GameObject cropsPrefab)
+    public void SetItemCrops(GameObject CropsPrefab)
     {
-        Debug.Log(cropsPrefab.name);
+        Debug.Log(CropsPrefab.name);
         hasPlaced = false;
 
-        currentBuilding = ((GameObject)Instantiate(cropsPrefab)).transform;
+        currentBuilding = ((GameObject)Instantiate(CropsPrefab)).transform;
+        placeBuilding = currentBuilding.GetComponent<PlaceBuilding>();
+    }
+
+    public void SetItemCow(GameObject CowPrefab)
+    {
+        Debug.Log(CowPrefab.name);
+        hasPlaced = false;
+
+        currentBuilding = ((GameObject)Instantiate(CowPrefab)).transform;
         placeBuilding = currentBuilding.GetComponent<PlaceBuilding>();
     }
 

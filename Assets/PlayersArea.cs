@@ -66,11 +66,17 @@ public class PlayersArea : MonoBehaviour
     //Player Stats
     public static int PlayerCoin;
 
-    //Building 
-    // public GameObject [] buildings;
+    //Building Prefabs/GameObjects
     public GameObject hut;
-    public GameObject waterWell;
-    public GameObject cropsPrefab;
+
+    //Water Prefabs/GameObjects
+    public GameObject WaterWell;
+
+    //Crops Prefabs/GameObjects
+    public GameObject CropsPrefab;
+
+    //Animal Prefab/GameObjects
+    public GameObject CowPrefab;//Animal
 
 
     //Moving camera position  - PlayerArea to PlayerView
@@ -120,6 +126,7 @@ public class PlayersArea : MonoBehaviour
     List<PlayersArea> purchaseWaterObjects = new List<PlayersArea>();
     List<PlayersArea> purchaseBuildingObjects = new List<PlayersArea>();
     List<PlayersArea> purchaseCropsObjects = new List<PlayersArea>();
+    List<PlayersArea> purchaseAnimalObjects = new List<PlayersArea>();
 
 
 
@@ -206,9 +213,9 @@ public class PlayersArea : MonoBehaviour
     {
         PurchaseBtn.gameObject.SetActive(false);
 
-        ObjectTypeText.text = purchaseBuildingObjects[0].ObjectType.ToString(); // Name of the object
+        ObjectTypeText.text = purchaseCropsObjects[0].ObjectType.ToString(); // Name of the object
 
-        DescriptionText.text = purchaseBuildingObjects[0].Text.ToString(); //Description
+        DescriptionText.text = purchaseCropsObjects[0].Text.ToString(); //Description
 
         //Confirm purchase which will be a Tick button and No for a X button
 
@@ -224,7 +231,28 @@ public class PlayersArea : MonoBehaviour
 
     }
 
+    //This will retieve the object type and text and display below
+    public void onClickViewCowPurchase() //Crops View
+    {
+        PurchaseBtn.gameObject.SetActive(false);
 
+        ObjectTypeText.text = purchaseAnimalObjects[0].ObjectType.ToString(); // Name of the object
+
+        DescriptionText.text = purchaseAnimalObjects[0].Text.ToString(); //Description
+
+        //Confirm purchase which will be a Tick button and No for a X button
+
+        YesPurchaseBtn.gameObject.SetActive(true);
+
+        YesPurchaseBtn.onClick.AddListener(createCow); //Spawn Prefab Method
+
+        YesPurchaseBtn.onClick.AddListener(resetGUI); //Remove UI components method
+
+        NoPurchaseBtn.gameObject.SetActive(true);
+
+        NoPurchaseBtn.onClick.AddListener(resetGUI); //Remove UI components method
+
+    }
 
     //---------------------------------------------------------------------------------------------------------------------------------
     //This method will be used to close purchase list depending on the button they press as this could be used for a top right X button
@@ -273,28 +301,24 @@ public class PlayersArea : MonoBehaviour
 
 
         //------Animal List------
-
-
+        purchaseAnimalObjects.Add(new PlayersArea { ObjectType = "Cow", Text = "This is a cow - Cost: 100 Coins", EffectOnStatCoin = 100, EffectOnStatAreaHappiness = 5 });
 
 
         //---Water Object List---
-        purchaseWaterObjects.Add(new PlayersArea { ObjectType = "Well", Text = "This is a water well that can be used to ....... - Cost: 100 Coins", EffectOnStatCoin = 10, EffectOnStatAreaHappiness = 5 });
+        purchaseWaterObjects.Add(new PlayersArea { ObjectType = "Well", Text = "This is a water well that can be used to ....... - Cost: 100 Coins", EffectOnStatCoin = 100, EffectOnStatAreaHappiness = 5 });
 
 
 
         //------Plants / Plant Crops List------
-         purchaseCropsObjects.Add(new PlayersArea { ObjectType = "Crops", Text = " .. , , effects = ... ,  - Cost: 10 Coins", EffectOnStatCoin = 10, EffectOnStatAreaHappiness = 5 });
-
-
-
+        purchaseCropsObjects.Add(new PlayersArea { ObjectType = "Crops", Text = " .. , , effects = ... ,  - Cost: 10 Coins", EffectOnStatCoin = 10, EffectOnStatAreaHappiness = 5 });
 
 
         //------Building List------
 
         //Build Hut
-         purchaseBuildingObjects.Add(new PlayersArea { ObjectType = "Hut", Text = " Hut ... - Cost: 50 Coins", EffectOnStatCoin = 50, EffectOnStatAreaHappiness = 5 });
+        purchaseBuildingObjects.Add(new PlayersArea { ObjectType = "Hut", Text = " Hut ... - Cost: 50 Coins", EffectOnStatCoin = 50, EffectOnStatAreaHappiness = 5 });
         //General Store
-         purchaseBuildingObjects.Add(new PlayersArea { ObjectType = "General Store", Text = " .. , Regalar income however there is a cost as you must pay your employees - Cost: 150 Coins", EffectOnStatCoin = 150, EffectOnStatAreaHappiness = 5 });
+        purchaseBuildingObjects.Add(new PlayersArea { ObjectType = "General Store", Text = " .. , Regalar income however there is a cost as you must pay your employees - Cost: 150 Coins", EffectOnStatCoin = 150, EffectOnStatAreaHappiness = 5 });
 
     }
 
@@ -525,7 +549,7 @@ public class PlayersArea : MonoBehaviour
 
 
             //Create waterWell / Prefab on screen
-            spawnObjects.SetItemWaterWell(waterWell);
+            spawnObjects.SetItemWaterWell(WaterWell);
         }
 
         else // prevents prefab instantiate
@@ -660,7 +684,7 @@ public class PlayersArea : MonoBehaviour
 
 
             //Create waterWell / Prefab on screen
-            spawnObjects.SetItemCrops(cropsPrefab);
+            spawnObjects.SetItemCrops(CropsPrefab);
 
         }
 
@@ -673,6 +697,25 @@ public class PlayersArea : MonoBehaviour
         //is there enough for the population
         //Increase work
     }
+
+
+    //--Animal - Cow
+    public void createCow()
+    {
+        //Add cow to the array within the AreaResources 
+        //AreaResources CLASS will create the cow and add its details
+        //Save GAME 
+        //
+    }
+
+
+
+
+
+
+
+
+
 
     public void moveCameraToPlayerView()
     {

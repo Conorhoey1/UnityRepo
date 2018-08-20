@@ -13,12 +13,14 @@ public class StatManager : MonoBehaviour
     float ReduceHungerTimeLeft = 10.0f; //seconds // Reduce
     float ReduceThirstTimeLeft = 10.0f; //seconds // Reduce
 
-    float IncreaseHungerTimeLeft = 20.0f; //seconds // Reduce
-    float IncreaseThirstTimeLeft = 20.0f; //seconds // Reduce
+    float IncreaseHungerTimeLeft = 20.0f; //seconds 
+    float IncreaseThirstTimeLeft = 20.0f; //seconds 
+    float IncreaseCowMilkTimeLeft = 20.0f; //seconds 
 
 
     bool setWaterWellTimer = false;
     bool setCropsTimer = false;
+    bool setCowMilkTimer = false;
 
 
     public CharacterCreator cc;
@@ -41,6 +43,10 @@ public class StatManager : MonoBehaviour
         if(setCropsTimer == true)
         {
             increaseHungerMethod();
+        }
+        if(setCowMilkTimer == true)
+        {
+            increa
         }
 
 
@@ -154,6 +160,49 @@ public class StatManager : MonoBehaviour
 
         }
     }
+
+    //Other scenes can use this - used for crop Object?
+    //BUG - in times left within debug
+    public void MilkCowTimerMethod()
+    {
+        IncreaseCowMilkTimeLeft -= Time.deltaTime;
+
+        setCowMilkTimer = true;
+
+        Debug.Log("Time Left HUNGER:" + Mathf.Round(IncreaseCowMilkTimeLeft)); //Test - Correct
+
+        if (IncreaseCowMilkTimeLeft <= 0)
+        {
+            Debug.Log("timer done");
+
+            //CharacterCreator.currentHunger = CharacterCreator.currentHunger + 20; // Add Hunger
+            CharacterCreator.currentXP = CharacterCreator.currentXP + 10;
+
+          //  ch.setHunger(); // Set Label Method
+
+            IncreaseHungerTimeLeft = IncreaseHungerTimeLeft + 20.0f; // Reset Timer
+
+        }
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void increasePlayerLevel()
     {

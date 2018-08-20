@@ -38,6 +38,10 @@ public class Character : MonoBehaviour
     //Ablity to replace the cow 
     //Shop
     //popup and menus 
+    //How to Play
+    //Make more neater
+    //Variables like health for animals and player cant go over 100 u need to validate this 
+    
 
 
     // ---- Code ----
@@ -52,6 +56,12 @@ public class Character : MonoBehaviour
     // ablity to move animals  - Barriers
     //Shop - Employees pay timer and income pay timer
     //More objects
+    //Area Resources -wood , food , water
+
+    //---Improvements after basic version--
+    //Graphics
+    //cleaner code /Clean up folders
+    //READ COMMENTS
 
     private static string characterName;
     private static string gender;
@@ -190,7 +200,7 @@ public class Character : MonoBehaviour
         PlayerPrefs.SetInt("Health" , Health);
 
     
-        HealthText.text = "Health: " + CharacterCreator.currentHealth.ToString();
+        HealthText.text = ": " + CharacterCreator.currentHealth.ToString();
 
         PlayerPrefs.Save();
     }
@@ -205,7 +215,7 @@ public class Character : MonoBehaviour
 
         PlayerPrefs.SetInt("Hunger", Hunger);
 
-        HungerText.text = "Hunger: " + CharacterCreator.currentHunger.ToString();
+        HungerText.text = ": " + CharacterCreator.currentHunger.ToString();
 
         PlayerPrefs.Save();
     }
@@ -219,7 +229,7 @@ public class Character : MonoBehaviour
     {
         PlayerPrefs.SetInt("Thirst", Thirst);
 
-        ThirstText.text = "Thirst: " + CharacterCreator.currentThirst.ToString();
+        ThirstText.text = ": " + CharacterCreator.currentThirst.ToString();
 
         PlayerPrefs.Save();
     }
@@ -235,7 +245,7 @@ public class Character : MonoBehaviour
         PlayerPrefs.SetInt("Respect", Respect);
 
         //startingRespect = PlayerPrefs.GetInt("Respect");
-        RespectText.text = "Respect: " + CharacterCreator.currentRespect.ToString();
+        RespectText.text = ": " + CharacterCreator.currentRespect.ToString();
 
         PlayerPrefs.Save();
     }
@@ -251,7 +261,7 @@ public class Character : MonoBehaviour
         PlayerPrefs.SetInt("Happiness", Happiness);
 
         // startingHappiness =  PlayerPrefs.GetInt("Happiness");
-        HappinessText.text = "Happiness: " + CharacterCreator.currentHappiness.ToString();
+        HappinessText.text = ": " + CharacterCreator.currentHappiness.ToString();
 
         PlayerPrefs.Save();
     }
@@ -266,7 +276,7 @@ public class Character : MonoBehaviour
     {
         PlayerPrefs.SetInt("PlayerLevel", PlayerLevel);
 
-        PlayerLevelText.text = "Player Level:" + CharacterCreator.currentPlayerLevel.ToString();
+        PlayerLevelText.text = "Level:" + CharacterCreator.currentPlayerLevel.ToString();
 
         //XP generation so that its based on winning challenges or something?
         //check rule so like what you can build / unlock at your players level
@@ -286,7 +296,7 @@ public class Character : MonoBehaviour
         PlayerPrefs.SetInt("PlayerCoin", PlayerCoin);
         
 
-        PlayerCoinText.text = "Coins: " + CharacterCreator.currentPlayerCoin.ToString();
+        PlayerCoinText.text = ": " + CharacterCreator.currentPlayerCoin.ToString();
         //Coin generation how to earn
         //check rule so like what you can build / purchase with the amount of coins your player has 
 
