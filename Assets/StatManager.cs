@@ -10,23 +10,23 @@ public class StatManager : MonoBehaviour
     //THIS IS A TEMP TIMER AS IT DOES NOT STORE WHEN THE USER QUITS
     // JUST TO GET THINGS MOVING 
 
-    float ReduceHungerTimeLeft = 10.0f; //seconds // Reduce
-    float ReduceThirstTimeLeft = 10.0f; //seconds // Reduce
+    public static float ReduceHungerTimeLeft = 10.0f; //seconds // Reduce
+    public static float ReduceThirstTimeLeft = 10.0f; //seconds // Reduce
 
-    float IncreaseHungerTimeLeft = 20.0f; //seconds 
-    float IncreaseThirstTimeLeft = 20.0f; //seconds 
-    float IncreaseCowMilkTimeLeft = 20.0f; //seconds 
+    public static float IncreaseHungerTimeLeft = 20.0f; //seconds 
+    public static float IncreaseThirstTimeLeft = 20.0f; //seconds 
+    public static float IncreaseCowMilkTimeLeft = 20.0f; //seconds 
 
 
-    bool setWaterWellTimer = false;
-    bool setCropsTimer = false;
-    bool setCowMilkTimer = false;
+    public static bool setWaterWellTimer = false;
+    public static bool setCropsTimer = false;
+    public static bool setCowMilkTimer = false;
 
 
     public CharacterCreator cc;
-
     public Character ch;
     public PlayersArea pha;
+    public AreaResources areaR;
 
 
     public void Update()
@@ -46,7 +46,7 @@ public class StatManager : MonoBehaviour
         }
         if(setCowMilkTimer == true)
         {
-            increa
+            MilkCowTimerMethod();
         }
 
 
@@ -175,12 +175,14 @@ public class StatManager : MonoBehaviour
         {
             Debug.Log("timer done");
 
-            //CharacterCreator.currentHunger = CharacterCreator.currentHunger + 20; // Add Hunger
+
             CharacterCreator.currentXP = CharacterCreator.currentXP + 10;
 
-          //  ch.setHunger(); // Set Label Method
 
-            IncreaseHungerTimeLeft = IncreaseHungerTimeLeft + 20.0f; // Reset Timer
+            setCowMilkTimer = false; //Stop timer until milk is collect
+
+            pha.CollectBtn(); // Spawn Collect button
+
 
         }
     }

@@ -41,6 +41,8 @@ public class Character : MonoBehaviour
     //How to Play
     //Make more neater
     //Variables like health for animals and player cant go over 100 u need to validate this 
+    //Choose a country - World map 
+    //Country  Island choose = area + prefab
     
 
 
@@ -57,11 +59,14 @@ public class Character : MonoBehaviour
     //Shop - Employees pay timer and income pay timer
     //More objects
     //Area Resources -wood , food , water
+    //Country - look at graphic description above
+    //AREA LEVELs increase cows etc 
+
 
     //---Improvements after basic version--
     //Graphics
     //cleaner code /Clean up folders
-    //READ COMMENTS
+    //READ COMMENTS + Notes in phone
 
     private static string characterName;
     private static string gender;

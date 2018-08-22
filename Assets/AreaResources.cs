@@ -5,6 +5,7 @@ using UnityEngine;
 public class AreaResources : MonoBehaviour
 {
 
+
     //This will give animals all variables , we will alos use this to view resources which the area can use 
     //The area can have like a low stock of bread or milk 
     //We could have a new scene of all this page - Not using this SCRIPT
@@ -14,19 +15,25 @@ public class AreaResources : MonoBehaviour
     List<AreaResources> CowObjects = new List<AreaResources>(); //Cow List array
 
     //Cow Variables 
-    public string AnimalType { get; set; } //Name - identifier
+    public int AnimalNo { get; set; } virtual// identifier
+    public string AnimalType { get; set; } //Name 
     public int AnimalHealth { get; set; }
     public int AnimalHunger { get; set; }
     public int AnimalThirst { get; set; }
     public int CoinValue { get; set; } //This value can go up and you can sell -- U need to work this out
-    public int MilkAmount { get; set; }// can milk a cow using the timer it will spawn then sell it for coins
+    public int MilkAmount { get; set; }// This is the amount they can produce
 
-    public int numberofCows; // For the list to show the user
+    public int TotalMilkStorage { get; set; } // You can then sell it 
+
+    public static int numberofCows = 0; // For the list to show the user
+
+    //Scripts
+    public StatManager stats;
 
     // Use this for initialization
     void Start ()
     {
-        AnimalObjects();
+       
 	}
 	
 	// Update is called once per frame
@@ -35,22 +42,38 @@ public class AreaResources : MonoBehaviour
 		
 	}
 
-
-    public void AnimalObjects()
-    {
-
-        //------Animal Cow------
-        CowObjects.Add(new AreaResources{ AnimalType = "Cow", AnimalHealth = 100, AnimalHunger = 100, AnimalThirst = 100 , CoinValue = 100 , MilkAmount = 5});
-
-
-    }
-
     public void addCowToArray()
     {
+        int i = 1;// loop once as only 1 cow
+
+
         //for loop 
-        //Then used to add a cow to the array 
-        //add 1 to int numberOfCows
+        for(i= 0; i <=1; i++ )
+        {
+            //add 1 to int numberOfCows
+            //we can use animalNo as an identifier
+            CowObjects.Add(new AreaResources { AnimalNo = numberofCows + 1 ,AnimalType = "Cow", AnimalHealth = 100, AnimalHunger = 100, AnimalThirst  =100 , CoinValue = 100 , MilkAmount = 5});
+
+        }
+
+       
+
         //Start timer for milk generation
-        //SAVe
+       stats.MilkCowTimerMethod();
+
+        //SAVE NEEDED
+    }
+
+    //This will generate the milkAmount
+    public void totalCowMilk()
+    {
+        
+        TotalMilkStorage = TotalMilkStorage + CowObjects[0].MilkAmount * numberofCows; //collection amount calculation
+
+        //Reset Timer
+        StatManager.setCowMilkTimer = true;
+        StatManager.IncreaseCowMilkTimeLeft = StatManager.IncreaseCowMilkTimeLeft + 20.0f; //Add time to the timer
+
+
     }
 }

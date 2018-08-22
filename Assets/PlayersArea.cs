@@ -34,6 +34,7 @@ public class PlayersArea : MonoBehaviour
     public StatManager statsManager;
     public UpgradeBuilds upgradeBuild;
     public PlaceBuilding placeBuilding;
+    public AreaResources areaResources;
 
   
 
@@ -42,10 +43,13 @@ public class PlayersArea : MonoBehaviour
     public int WaterLevel { get; set; }
     public int WaterAmount { get; set; }
 
-    //Area Resources - Food
+    //------------Area Resources - Food------------------
     public string Foodtype { get; set; } // well?? , river>?
     public int FoodLevel { get; set; }
     public int FoodAmount { get; set; }
+
+    //------Area Resources-------Food - UI
+    public Button CollectMilkBtn; //Collect Cow Milk Btn
 
     //Purchase
     public static bool valid = false;
@@ -706,62 +710,122 @@ public class PlayersArea : MonoBehaviour
         //AreaResources CLASS will create the cow and add its details
         //Save GAME 
         //
-    }
+
+        //
 
 
 
 
 
 
+        //AreaResources.numberofCows++;
 
+        // string userInput = "";
 
+        Debug.Log("House selected");
 
-
-    public void moveCameraToPlayerView()
-    {
-        cameraPosition = 0;
-
-        if (cameraPosition == 0)
+        if (AreaResources.numberofCows > 12)
         {
-            cameraPosition = cameraPosition + 1;
-            //Boolean value to determine which platform/View we want
-            triggerPlayerView = true;
+            Debug.Log("Unable to build , you can only have 5 cows at this areas level ");
 
+            //Would you like to upgrade these houses to an estate for 1300 Coins
 
+            //Benefits - Community spirt and happiness increase
+            //  Debug.Log("Would you like to upgrade these houses to an estate for 1300 Coins");
 
-            if (triggerPlayerView == true)
+            //User input but we want it to be a button yes or no buttons
+            //  if(userInput == "Yes") 
+            //  {
+            //Yes
+            //   CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - 1300;
+
+            //Upgrade House build
+            //   upgradeBuild.UpgradeHouseBuild();
+            // }
+
+            //   else if(userInput == "No")
+            // {
+            //No
+            //     Debug.Log("Purchase cancelled");
+            //  }
+
+        }
+
+        else
+        {
+
+            //Purchase + funds Check
+            if (CharacterCreator.currentPlayerCoin >= 100)
             {
-                //Move to PlayerView Manual
-                Camera.main.transform.Translate(228, 42, -38);
-                Camera.main.transform.Rotate(-90, 0, 0);
+                CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - purchaseAnimalObjects[0].EffectOnStatCoin;
+                ch.setPlayerCoin();
 
-
-
-
-                //Disable label that are not needed
-                ch.populationText.gameObject.SetActive(false);
-                ch.areaText.gameObject.SetActive(false);
-                ch.areaTypeText.gameObject.SetActive(false);
-                ch.areaLevelText.gameObject.SetActive(false);
-
-                //Remove button that triggers this method and will then create a new button 
-                GoToPlayerViewBtn.gameObject.SetActive(false);
-                GoToPlayerAreaBtn.gameObject.SetActive(true);
-
+                valid = true;
+                Debug.Log("Cow purchase");
             }
+            else
+            {
+                Debug.Log("Not enough funds - 100 coins are needed");
+
+                valid = false;
+            }
+
+
+            //Timer of how often water gens
+        }
+
+        if (valid == true) // IF the player has enough funds  -  stats and update stats - Instantiate prefab
+        {
+
+            Debug.Log("creating cow");
+
+
+
+            //Storage - Player Storage/SAVE
+            areaResources.addCowToArray();
+           
+
+      
+
+      
+
+          
+            //XP
+            CharacterCreator.currentXP = CharacterCreator.currentXP + 100;
+            statsManager.PlayerLevelCheck();
+
+            //Increase Area Level
+            statsManager.increaseAreaLevel();
+
+            validInstantiate = true; // Allows SpawnObject Script to call method which spawns prefab
+
+
+
+            //Create House / Prefab on screen
+            spawnObjects.SetItem(CowPrefab);
+
+
         }
 
 
-
-
-
-
-
-
-
-
-
     }
+
+    public void CollectBtn()
+    {
+        //Create Button for the user to click to collect milk then the  time restarts.
+        //Make it position near location of the Cow object/Prefab
+
+        CollectMilkBtn.gameObject.SetActive(true); // this will make it spawn on the UI and then OnClick totalCowMilk()
+    }
+
+
+
+
+
+
+
+
+
 
 
     //Way back to PlayerArea from movement of different platforms
