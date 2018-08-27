@@ -49,6 +49,8 @@ public class SaveGameManager : MonoBehaviour
     //Scripts
     CharacterCreator characterCreator;
     UpgradeBuilds upgradeBuilds;
+    PlayersArea playersArea;
+    AreaResources areaResources;
 
     bool fileExists;
 
@@ -59,10 +61,10 @@ public class SaveGameManager : MonoBehaviour
     }
 
     public void ReadPlayerData()
-    {
+    {       
+        //Player Stats - PlayerView
         saveData.name = CharacterCreator.characterName;
         saveData.gender = CharacterCreator.gender;
-
         saveData.Health = CharacterCreator.currentHealth;
         saveData.Hunger = CharacterCreator.currentHunger;
         saveData.Thirst = CharacterCreator.currentThirst;
@@ -71,17 +73,22 @@ public class SaveGameManager : MonoBehaviour
         saveData.PlayerLevel = CharacterCreator.currentPlayerLevel;
         saveData.PlayerCoin = CharacterCreator.currentPlayerCoin;
 
+        //PlayerArea
         saveData.areaName = CharacterCreator.areaName;
         saveData.areaLevel = CharacterCreator.areaLevel;
         saveData.Population = CharacterCreator.currentPopulation;
         saveData.areaType = CharacterCreator.areaType;
-        saveData.AreaHappiness = CharacterCreator.areaHappiness;
+        saveData.AreaHappiness = CharacterCreator.areaHappiness;    
+    
 
 
+        //Upgrade builds
         saveData.EstateName = UpgradeBuilds.estateName;
         saveData.EstateLevel = UpgradeBuilds.estateLevel;
         saveData.EstatePopulation = UpgradeBuilds.estatePopulation;
         saveData.RoadName =  UpgradeBuilds.roadName;
+
+
         
 
 

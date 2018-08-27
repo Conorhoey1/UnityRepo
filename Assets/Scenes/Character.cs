@@ -61,12 +61,15 @@ public class Character : MonoBehaviour
     //Area Resources -wood , food , water
     //Country - look at graphic description above
     //AREA LEVELs increase cows etc 
-
+    //Save AreaResource lists - need to convert to a  Json file or xml
+    //Save object position
+    //number you want to sell , arrows to go up and down in value
 
     //---Improvements after basic version--
     //Graphics
     //cleaner code /Clean up folders
     //READ COMMENTS + Notes in phone
+    //Arrows for number you want to sell
 
     private static string characterName;
     private static string gender;
@@ -80,12 +83,7 @@ public class Character : MonoBehaviour
     public static int PlayerLevel;
     public static int PlayerCoin;
 
-    //Area Variables
-    public static string areaName; // need a input box when user unlocks an area
-    public static int currentPopulation;
-    public static int areaLevel;
-    public static string areaType;
-    public static int areaHappiness;
+
 
     //Player XP - different levels require a certain amount of XP
     public static int RequiredXP; // Required amount - used to set different amounts for higher Levels
@@ -101,12 +99,7 @@ public class Character : MonoBehaviour
     public Text PlayerLevelText;
     public Text PlayerCoinText;
 
-    //Labels - Player Area 
-    public Text areaText;
-    public Text areaLevelText;
-    public Text populationText;
-    public Text areaTypeText;
-
+  
 
     //Scripts
     public CharacterCreator ch;
@@ -171,13 +164,6 @@ public class Character : MonoBehaviour
         setPlayerCoin();
         //getPlayerCoin();
 
-        setAreaName();
-
-        setAreaLevel();
-
-        setAreaPopulation();
-
-        setAreaType();
 
         //disableSpawnScript();
         //MoveCamera();
@@ -315,77 +301,7 @@ public class Character : MonoBehaviour
     }
 
 
-    public void setAreaPopulation()
-    {
-        PlayerPrefs.SetInt("Population", currentPopulation);
-
-        populationText.text = "Population:" + CharacterCreator.currentPopulation.ToString();
-
-        //XP generation so that its based on winning challenges or something?
-        //check rule so like what you can build / unlock at your players level
-
-        PlayerPrefs.Save();
-
-    }
-    public void getAreaPopulation()
-    {
-       int currentPopulation = PlayerPrefs.GetInt("Population");
-    }
-
-    public void setAreaName()
-    {
-        PlayerPrefs.SetString("areaName", areaName);
-
-        areaText.text = "Area Name: " + CharacterCreator.areaName.ToString(); //should we change this name , Text Name
-
-        PlayerPrefs.Save();
-    }
-
-    public void getAreaName()
-    {
-        string areaName = PlayerPrefs.GetString("AreaName");
-    }
-
-
-    public void setAreaLevel()
-    {
-       PlayerPrefs.SetInt("AreaLevel", areaLevel);
-
-       areaLevelText.text = "Area Level: " + CharacterCreator.areaLevel.ToString();
-        PlayerPrefs.Save();
-    }
-
-   public void getAreaLevel()
-   {
-        int areaLevel = PlayerPrefs.GetInt("AreaLevel");
-   }
-
-    public void setAreaType()
-    {
-       PlayerPrefs.SetString("areaType", CharacterCreator.areaType);
-
-       areaTypeText.text = "Area Type: " + CharacterCreator.areaType.ToString();
-
-       PlayerPrefs.Save();
-    }
-
-    public void getAreaType()
-    {
-        string areaType = PlayerPrefs.GetString("areaType");
-    }
-
-    public void setAreaHappiness()
-    {
-        PlayerPrefs.SetInt("AreaHappiness", areaHappiness);
-
-        areaLevelText.text = "Area Happiness: " + CharacterCreator.areaHappiness.ToString();
-        PlayerPrefs.Save();
-    }
-
-    public void getAreaHappiness()
-    {
-        int areaHappiness = PlayerPrefs.GetInt("AreaHappiness");
-    }
+  
 
 
    

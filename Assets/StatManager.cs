@@ -169,7 +169,7 @@ public class StatManager : MonoBehaviour
 
         setCowMilkTimer = true;
 
-        Debug.Log("Time Left HUNGER:" + Mathf.Round(IncreaseCowMilkTimeLeft)); //Test - Correct
+        Debug.Log("Time Left Milk:" + Mathf.Round(IncreaseCowMilkTimeLeft)); //Test - Correct
 
         if (IncreaseCowMilkTimeLeft <= 0)
         {
@@ -182,6 +182,7 @@ public class StatManager : MonoBehaviour
             setCowMilkTimer = false; //Stop timer until milk is collect
 
             pha.CollectBtn(); // Spawn Collect button
+
 
 
         }
@@ -303,7 +304,7 @@ public class StatManager : MonoBehaviour
     public void PopulationIncrease()
     {
         CharacterCreator.currentPopulation = CharacterCreator.currentPopulation + 5;//Test Amount
-        ch.setAreaPopulation();
+        pha.setAreaPopulation();
 
     }
 
@@ -323,7 +324,7 @@ public class StatManager : MonoBehaviour
             //Set Area type
             CharacterCreator.areaType = "Settlement";
          
-            ch.setAreaType();
+            pha.setAreaType();
 
 
         }
@@ -337,7 +338,7 @@ public class StatManager : MonoBehaviour
 
             //Set Area type
             CharacterCreator.areaType = "Village";
-            ch.setAreaType();
+            pha.setAreaType();
 
         }
         //Town
@@ -350,7 +351,7 @@ public class StatManager : MonoBehaviour
 
             //Set Area type
             CharacterCreator.areaType = "Town";
-            ch.setAreaType();
+            pha.setAreaType();
         }
         //City
         else if (CharacterCreator.currentPopulation >= 21 && CharacterCreator.currentPopulation <= 30)
@@ -362,7 +363,7 @@ public class StatManager : MonoBehaviour
 
             //Set Area type
             CharacterCreator.areaType = "City";
-            ch.setAreaType();
+            pha.setAreaType();
         }
         //Country
         else

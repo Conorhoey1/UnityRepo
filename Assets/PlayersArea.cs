@@ -6,15 +6,15 @@ using UnityEngine.UI;
 [System.Serializable]
 
 public class PlayersArea : MonoBehaviour
-{ 
+{
     //Scene
     //Map 
     //Can we get player stat at the top?
     // TImers run in all scenes 
 
-        //Todo
-        //PlayerArea to PlayerView- still has a bug
-        //Position of prefabs has a bug able to do legal postions
+    //Todo
+    //PlayerArea to PlayerView- still has a bug
+    //Position of prefabs has a bug able to do legal postions
 
     //This script will be used to generate an area for the player in which they run/own
     //A town will have stats such population etc
@@ -36,7 +36,47 @@ public class PlayersArea : MonoBehaviour
     public PlaceBuilding placeBuilding;
     public AreaResources areaResources;
 
-  
+
+
+    //-----Player Area UI AND VARIABLES----
+
+    //Labels - Player Area 
+    public Text areaText;
+    public Text areaLevelText;
+    public Text populationText;
+    public Text areaTypeText;
+
+    //Area Variables
+    public static string areaName; // need a input box when user unlocks an area
+    public static int currentPopulation;
+    public static int areaLevel;
+    public static string areaType;
+    public static int areaHappiness;
+
+
+
+
+
+
+    //------Area Resources-------Food - UI
+    public Button CollectMilkBtn; //Collect Cow Milk Btn
+
+    public GameObject AreaStoragePanel; // Panel
+    public Text CowCounterText;//Used for storage list
+    public Text MilkCounterText; //Used for storage list
+    public InputField InputSell;//Input
+    public Button SellBtn;
+    public Text TotalSellingAmount;
+    
+    public Button CloseStorageBtn;//close 
+    public Button GoToStorageBtn;//open
+                           
+
+
+
+
+
+
 
     //Area Resources - Water
     public string Watertype { get; set; } // well?? , river>?
@@ -47,9 +87,6 @@ public class PlayersArea : MonoBehaviour
     public string Foodtype { get; set; } // well?? , river>?
     public int FoodLevel { get; set; }
     public int FoodAmount { get; set; }
-
-    //------Area Resources-------Food - UI
-    public Button CollectMilkBtn; //Collect Cow Milk Btn
 
     //Purchase
     public static bool valid = false;
@@ -79,9 +116,10 @@ public class PlayersArea : MonoBehaviour
     //Crops Prefabs/GameObjects
     public GameObject CropsPrefab;
 
-    //Animal Prefab/GameObjects
+    //-------------Animal - Cow ------------------
     public GameObject CowPrefab;//Animal
-
+    public static int TotalMilkStorage; //Used for the storage list
+    public static int numberofCows = 0; // Used for the storage list
 
     //Moving camera position  - PlayerArea to PlayerView
     public static int movement;
@@ -93,7 +131,6 @@ public class PlayersArea : MonoBehaviour
 
     //Cameras
     public static int cameraPosition;
-
     public Camera SpawnObjects;
     public Camera PlayerViewCamera;
 
@@ -106,6 +143,11 @@ public class PlayersArea : MonoBehaviour
     public Button YesPurchaseBtn;
     public Button NoPurchaseBtn;
     public bool BtnClicked;
+
+
+    //Selling Variables - Resources
+    public static int numberOfCowsSelling;
+    public static int numberOfMilkSelling;
 
 
     //Variables for Object Effects
@@ -151,11 +193,128 @@ public class PlayersArea : MonoBehaviour
         //statsManager.CheckLevelUp();
         PlayerViewCamera.gameObject.SetActive(false);
 
+        setAreaName();
+
+        setAreaLevel();
+
+        setAreaPopulation();
+
+        setAreaType();
+
+        setResourceCow();
+
+        setResourceMilk();
+
+        getInputSellAmountsValue();
     }
 
-   
+
+    //------------AREA VARIABLES SET AND GET ---------
+
+    public void setAreaPopulation()
+    {
+        PlayerPrefs.SetInt("Population", currentPopulation);
+
+        populationText.text = "Population:" + CharacterCreator.currentPopulation.ToString();
+
+        //XP generation so that its based on winning challenges or something?
+        //check rule so like what you can build / unlock at your players level
+
+        PlayerPrefs.Save();
+
+    }
+    public void getAreaPopulation()
+    {
+        int currentPopulation = PlayerPrefs.GetInt("Population");
+    }
+
+    public void setAreaName()
+    {
+        PlayerPrefs.SetString("areaName", areaName);
+
+        areaText.text = "Area Name: " + CharacterCreator.areaName.ToString(); //should we change this name , Text Name
+
+        PlayerPrefs.Save();
+    }
+
+    public void getAreaName()
+    {
+        string areaName = PlayerPrefs.GetString("AreaName");
+    }
+
+
+    public void setAreaLevel()
+    {
+        PlayerPrefs.SetInt("AreaLevel", areaLevel);
+
+        areaLevelText.text = "Area Level: " + CharacterCreator.areaLevel.ToString();
+        PlayerPrefs.Save();
+    }
+
+    public void getAreaLevel()
+    {
+        int areaLevel = PlayerPrefs.GetInt("AreaLevel");
+    }
+
+    public void setAreaType()
+    {
+        PlayerPrefs.SetString("areaType", CharacterCreator.areaType);
+
+        areaTypeText.text = "Area Type: " + CharacterCreator.areaType.ToString();
+
+        PlayerPrefs.Save();
+    }
+
+    public void getAreaType()
+    {
+        string areaType = PlayerPrefs.GetString("areaType");
+    }
+
+    public void setAreaHappiness()
+    {
+        PlayerPrefs.SetInt("AreaHappiness", areaHappiness);
+
+        areaLevelText.text = "Area Happiness: " + CharacterCreator.areaHappiness.ToString();
+        PlayerPrefs.Save();
+    }
+
+    public void getAreaHappiness()
+    {
+        int areaHappiness = PlayerPrefs.GetInt("AreaHappiness");
+    }
+
+
+    public void setResourceCow()
+    {
+        PlayerPrefs.SetInt("AreaCow", numberofCows);
+
+        CowCounterText.text = "Area Cow " + numberofCows.ToString();
+
+    }
+
+    public void getResourceCow()
+    {
+        int numberofCows = PlayerPrefs.GetInt("AreaCow");
+    }
+
+    public void setResourceMilk()
+    {
+        PlayerPrefs.SetInt("AreaMilk", TotalMilkStorage);
+
+        MilkCounterText.text = "Area Milk " + TotalMilkStorage.ToString();
+
+    }
+
+    public void getResourceMilk()
+    {
+        int TotalMilkStorage = PlayerPrefs.GetInt("AreaMilk");
+    }
+
+
+
+
     //----------------------------------------PURCHASE OBJECTS--------------------------------------------
-    
+
     //This will be used to instatiate PurchaseList when purchase button is clicked
     //List of buttons will appear
     public void menuPurchaseList()
@@ -273,7 +432,7 @@ public class PlayersArea : MonoBehaviour
         NoPurchaseBtn.onClick.RemoveAllListeners();
     }
 
-    
+
     //----------------------------------------------------------------------------------------------------------------------------------
 
 
@@ -418,13 +577,13 @@ public class PlayersArea : MonoBehaviour
             statsManager.PopulationCheck();
 
             //Update AreaType Label - GUI
-            ch.setAreaType();
+            setAreaType();
 
             CharacterCreator.currentPopulation = CharacterCreator.currentPopulation + 1;
             Debug.Log(CharacterCreator.currentPopulation);
 
             //Update Population Label - GUI
-            ch.setAreaPopulation();
+            setAreaPopulation();
 
             //XP
             CharacterCreator.currentXP = CharacterCreator.currentXP + 100;
@@ -513,7 +672,7 @@ public class PlayersArea : MonoBehaviour
                 CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - 10;
 
 
-                
+
                 ch.setPlayerCoin();
 
                 valid = true;
@@ -722,9 +881,9 @@ public class PlayersArea : MonoBehaviour
 
         // string userInput = "";
 
-        Debug.Log("House selected");
+        Debug.Log("Cow selected");
 
-        if (AreaResources.numberofCows > 12)
+        if (numberofCows > 12)
         {
             Debug.Log("Unable to build , you can only have 5 cows at this areas level ");
 
@@ -783,13 +942,13 @@ public class PlayersArea : MonoBehaviour
 
             //Storage - Player Storage/SAVE
             areaResources.addCowToArray();
-           
 
-      
 
-      
 
-          
+
+
+
+
             //XP
             CharacterCreator.currentXP = CharacterCreator.currentXP + 100;
             statsManager.PlayerLevelCheck();
@@ -804,6 +963,10 @@ public class PlayersArea : MonoBehaviour
             //Create House / Prefab on screen
             spawnObjects.SetItem(CowPrefab);
 
+            numberofCows = numberofCows + 1;
+
+            setResourceCow();
+
 
         }
 
@@ -816,13 +979,76 @@ public class PlayersArea : MonoBehaviour
         //Make it position near location of the Cow object/Prefab
 
         CollectMilkBtn.gameObject.SetActive(true); // this will make it spawn on the UI and then OnClick totalCowMilk()
+
+        setResourceMilk();
+
     }
 
+    public void RemoveCollectBtn()
+    {
+
+        CollectMilkBtn.gameObject.SetActive(false); // this will make it spawn on the UI and then OnClick totalCowMilk()
+
+    }
+
+    public void StoragePanel()
+    {
+        //ADvnced version so like buttons with icons food , animael etc 
+        //if user click this panel displays..
+
+        AreaStoragePanel.gameObject.SetActive(true);
+        MilkCounterText.gameObject.SetActive(true);
+        CowCounterText.gameObject.SetActive(true);
+        GoToStorageBtn.gameObject.SetActive(false);
+        TotalSellingAmount.gameObject.SetActive(true);
+        SellBtn.gameObject.SetActive(true);
+        InputSell.gameObject.SetActive(true);
+
+        //button to close
+        CloseStorageBtn.gameObject.SetActive(true);
+
+    }
+
+    public void StoragePanelInActive()
+    {
+        AreaStoragePanel.gameObject.SetActive(false);
+        MilkCounterText.gameObject.SetActive(false);
+        CowCounterText.gameObject.SetActive(false);
+        CloseStorageBtn.gameObject.SetActive(false);
+        TotalSellingAmount.gameObject.SetActive(false);
+        SellBtn.gameObject.gameObject.SetActive(false);
+        InputSell.gameObject.SetActive(false);
+
+        //button to reopen (true)
+        GoToStorageBtn.gameObject.SetActive(true);
+    }
+
+    public void getInputSellAmountsValue()
+    {
+        //so we will have INT for each resource
+        // SellCowInput = int.Parse(numberOfCowsSelling.ToString());
+
+        // SellCowInput.text = int.Parse(numberOfCowsSelling.ToString());
+
+        //numberOfCowsSelling = int.Parse(SellCowInput);
 
 
+        if (int.TryParse(InputSell.text, out numberOfCowsSelling))
+        {
+            // Valid input, do something with it.
+            numberOfCowsSelling = int.Parse(InputSell.text);
+        }
+        else
+        {
+            // Not a number, do something else with it.
+            Debug.Log("oo");
+        }
 
+    }
 
+   
 
+         
 
 
 
@@ -862,10 +1088,10 @@ public class PlayersArea : MonoBehaviour
 
 
                 //Disable label that are not needed
-                ch.populationText.gameObject.SetActive(true);
-                ch.areaText.gameObject.SetActive(true);
-                ch.areaTypeText.gameObject.SetActive(true);
-                ch.areaLevelText.gameObject.SetActive(true);
+                populationText.gameObject.SetActive(true);
+                areaText.gameObject.SetActive(true);
+                areaTypeText.gameObject.SetActive(true);
+                areaLevelText.gameObject.SetActive(true);
 
                 //Remove button that triggers this method and will then create a new button 
                 GoToPlayerViewBtn.gameObject.SetActive(true);

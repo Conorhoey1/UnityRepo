@@ -87,7 +87,7 @@ public class CharacterCreator : MonoBehaviour
         currentRespect = 100;
         currentHappiness = 100;
         currentPlayerLevel = 1;
-        currentPlayerCoin = 1000;
+        currentPlayerCoin = 2000;
 
         currentPopulation = 1;
 
