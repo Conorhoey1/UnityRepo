@@ -16,11 +16,15 @@ public class StatManager : MonoBehaviour
     public static float IncreaseHungerTimeLeft = 20.0f; //seconds 
     public static float IncreaseThirstTimeLeft = 20.0f; //seconds 
     public static float IncreaseCowMilkTimeLeft = 20.0f; //seconds 
+    public static float IncreaseShopIncomeTimeLeft = 20.0f; //seconds 
+    public static float IncreaseShopExpensesTimeLeft = 20.0f; //seconds 
 
 
     public static bool setWaterWellTimer = false;
     public static bool setCropsTimer = false;
     public static bool setCowMilkTimer = false;
+    public static bool setShopIncomeTimer = false;
+    public static bool setShopExpensesTimer = false;
 
 
     public CharacterCreator cc;
@@ -44,9 +48,20 @@ public class StatManager : MonoBehaviour
         {
             increaseHungerMethod();
         }
+
         if(setCowMilkTimer == true)
         {
             MilkCowTimerMethod();
+        }
+
+        if (setShopExpensesTimer == true)
+        {
+            ShopIncomeTimerMethod();
+        }
+
+        if (setShopExpensesTimer == true)
+        {
+            ShopExpensesTimerMethod();
         }
 
 
@@ -183,12 +198,55 @@ public class StatManager : MonoBehaviour
 
             pha.CollectBtn(); // Spawn Collect button
 
+            IncreaseCowMilkTimeLeft = IncreaseCowMilkTimeLeft + 20.0f; // Reset Timer
+
+        }
+    }
+
+    public void ShopIncomeTimerMethod()
+    {
+        IncreaseShopIncomeTimeLeft -= Time.deltaTime;
+
+        setShopIncomeTimer = true;
+
+        Debug.Log("Time Left Shop Income:" + Mathf.Round(IncreaseShopIncomeTimeLeft)); //Test - Correct
+
+        if (IncreaseShopIncomeTimeLeft <= 0)
+        {
+            Debug.Log("timer done");
+
+
+            CharacterCreator.currentXP = CharacterCreator.currentXP + 10;
+            CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin + 10;
+
+  
+
+            IncreaseShopIncomeTimeLeft = IncreaseShopIncomeTimeLeft + 20.0f; // Reset Timer
+
 
 
         }
     }
 
+    public void ShopExpensesTimerMethod()
+    {
+        IncreaseShopExpensesTimeLeft -= Time.deltaTime;
 
+        setShopExpensesTimer = true;
+
+        Debug.Log("Time Left Shop Expenses:" + Mathf.Round(IncreaseShopExpensesTimeLeft)); //Test - Correct
+
+        if (IncreaseShopExpensesTimeLeft <= 0)
+        {
+            Debug.Log("timer done");
+
+
+            CharacterCreator.currentXP = CharacterCreator.currentXP + 10;
+            CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - 5; //PlayersArea.areaExpenses;
+
+            IncreaseShopExpensesTimeLeft = IncreaseShopExpensesTimeLeft + 50.0f; // Reset Timer
+        }
+    }
 
 
 

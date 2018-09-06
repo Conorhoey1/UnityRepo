@@ -1,0 +1,11 @@
+Task for today
+
+-Fix Bug -Illegal positioning
+- Fix coins transaction bug
+// validations of selling 
+
+
+ 
+
+
+

@@ -43,12 +43,11 @@ public class Character : MonoBehaviour
     //Variables like health for animals and player cant go over 100 u need to validate this 
     //Choose a country - World map 
     //Country  Island choose = area + prefab
-    
+
 
 
     // ---- Code ----
     // Fix switch camera and be able to go back to playerArea from playerView
-    //XP Generation and Ranking up system
     // User input and validation , Error/Crash control
     // Mobile
     //Save Object placement - SaveManager
@@ -56,20 +55,30 @@ public class Character : MonoBehaviour
     //Better camera angle  - zoom and view object
     //Store animal in fencing / shed
     // ablity to move animals  - Barriers
-    //Shop - Employees pay timer and income pay timer
     //More objects
     //Area Resources -wood , food , water
     //Country - look at graphic description above
-    //AREA LEVELs increase cows etc 
     //Save AreaResource lists - need to convert to a  Json file or xml
     //Save object position
     //number you want to sell , arrows to go up and down in value
+    //Sell Object - e.g. Building or Destory for a price to upgrade
+    //Upgrades of building etc
+    
+    //RESet GUI WHEN A you open another menu etc
+    //BUG WITH LEgAL position 
 
-    //---Improvements after basic version--
+        
+
+    //-------------Improvements after basic version-------
     //Graphics
     //cleaner code /Clean up folders
     //READ COMMENTS + Notes in phone
     //Arrows for number you want to sell
+    //XP Generation and Ranking up system
+    //When you reopen the purchase panel the last object you purchase is still displayed but when u click yes it does nothins - we need a reset description
+    //AREA LEVELs increase cows etc 
+    //UPDATE NAMES OF OBJECT TYPES AND MAKE MORE UNIQUE/Easy to understand - important to change within spawnobjects.name ++ ObjectType + onClickView
+
 
     private static string characterName;
     private static string gender;

@@ -9,6 +9,16 @@ using UnityEngine;
 [System.Serializable]
 public class AreaResources : MonoBehaviour
 {
+    //This is mainly for animals and resources e.g. Wood , stone 
+
+
+
+    //TODO
+
+        //- Remove prefab on sell (Scene)
+        //- Improve GUI
+        //- Add More Resources 
+        
 
 
 
@@ -42,6 +52,7 @@ public class AreaResources : MonoBehaviour
     public StatManager stats;
     public PlayersArea playerArea;
     public Character character;
+    public SpawnObjects spawnObjects;
 
     // Use this for initialization
     void Start ()
@@ -128,9 +139,6 @@ public class AreaResources : MonoBehaviour
         //PlayersArea.numberOfCowsSelling;
         //PlayersArea.numberOfMilkSelling
 
-       
-
-
         //Validate if the user has these assets available
         if(PlayersArea.numberOfCowsSelling > PlayersArea.numberofCows)
         {
@@ -140,32 +148,8 @@ public class AreaResources : MonoBehaviour
         else if(PlayersArea.numberofCows <= PlayersArea.numberOfCowsSelling)
         {
 
-
             //Sell Button will total up the coin amount and add to player balance from all objects so 1 button for all 
-      
-
-
-            CowObjects.RemoveRange(1 , PlayersArea.numberofCows);
-            
-
-
-            //  for(int i = 0; i<= PlayersArea.numberofCows;  i++)
-            //  {
-            //     Debug.Log(CowObjects[i].AnimalNo);
-            //
-            //  }
-
-            //test
-           // display();
-
-
-
-
-
-
-
-
-
+            CowObjects.RemoveRange(1, PlayersArea.numberofCows);
 
 
             //Reduce number of cows 
@@ -173,42 +157,19 @@ public class AreaResources : MonoBehaviour
             playerArea.setResourceCow();
             Debug.Log("in HRERE");
 
-            //find which CowObject to remove - 
-
-            
-
-         //   int max = int.MinValue;
-
-          //  foreach (AreaResources yep in CowObjects)
-          //  {
-           //     if (yep.AnimalNo > max)
-            //    {
-           //         max = yep.AnimalNo;
-              //  }
-
-         //   }
-         //   Debug.Log("this is max" + max);
-
-
-
             validSell = true; //Sell confirm
 
             //Enable Sell Method and attach to the button OnClick()
-            playerArea.SellBtn.onClick.AddListener(OnSellRetieveCoinsMethod);
+            playerArea.SellBtn.onClick.AddListener(OnSellRetrieveCoinsMethod);
 
         }
 
-
     }
 
-    
-
-    public void OnSellRetieveCoinsMethod()
+    public void OnSellRetrieveCoinsMethod()
     {
         if (validSell == true)
         {
-
-
 
             CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin + totalCoins;
             character.setPlayerCoin();
@@ -218,18 +179,20 @@ public class AreaResources : MonoBehaviour
             PlayersArea.numberOfCowsSelling = 0;
 
             //NEED A WAY TO REMOVE PREFAB NOW
-            //END TIMERS
-            //CLOSE THE PANEL
-            //MORE TESTing
 
-        
-            
+            //END TIMERS
+            StatManager.setCowMilkTimer = false;
+
+            //CLOSE THE PANEL
+            playerArea.resetGUI();
+
+
             //Remove from ObjectList
             //  
             //CowObjects.RemoveAt(highestNum); // need an proper identifer as Animal type wil remove them all ?
-      
-            
-            
+
+
+
             //end timers or 1 timer etc
         }
         else
@@ -245,9 +208,6 @@ public class AreaResources : MonoBehaviour
         //Need something for the UI?
         Debug.Log("Validation - cannot sell");
     }
-
-
-
 
     //Save Game
     //  public void saveObjects()

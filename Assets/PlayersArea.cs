@@ -2,6 +2,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System;
+
 
 [System.Serializable]
 
@@ -9,12 +11,12 @@ public class PlayersArea : MonoBehaviour
 {
     //Scene
     //Map 
-    //Can we get player stat at the top?
+
     // TImers run in all scenes 
 
     //Todo
     //PlayerArea to PlayerView- still has a bug
-    //Position of prefabs has a bug able to do legal postions
+
 
     //This script will be used to generate an area for the player in which they run/own
     //A town will have stats such population etc
@@ -22,9 +24,7 @@ public class PlayersArea : MonoBehaviour
     //levels 
     //Roles  , government , building 
 
-    //We allow the user to  click a position on the screen in which they want to spawn an object
-    //They should be only able to spawn the object if they purchase the object
-    // we have method which tracks the mouse and the position but this will allow them to click at anytime, so we need to stop this only avaible when...
+
 
 
     //Scripts
@@ -52,8 +52,8 @@ public class PlayersArea : MonoBehaviour
     public static int areaLevel;
     public static string areaType;
     public static int areaHappiness;
-
-
+    public static int areaExpenses;
+    public static int areaIncome;
 
 
 
@@ -67,10 +67,10 @@ public class PlayersArea : MonoBehaviour
     public InputField InputSell;//Input
     public Button SellBtn;
     public Text TotalSellingAmount;
-    
+
     public Button CloseStorageBtn;//close 
     public Button GoToStorageBtn;//open
-                           
+
 
 
 
@@ -104,6 +104,9 @@ public class PlayersArea : MonoBehaviour
     //Crops - Variables
     public int cropsCounter { get; set; }
 
+    //Shop - Variables
+    public int shopCounter { get; set; }
+
     //Player Stats
     public static int PlayerCoin;
 
@@ -113,13 +116,22 @@ public class PlayersArea : MonoBehaviour
     //Water Prefabs/GameObjects
     public GameObject WaterWell;
 
-    //Crops Prefabs/GameObjects
+    //Crop Prefabs/GameObjects
     public GameObject CropsPrefab;
 
+
+    //Crops Prefabs/GameObjects
+    public GameObject ShopPrefab;
+
     //-------------Animal - Cow ------------------
+
     public GameObject CowPrefab;//Animal
+
     public static int TotalMilkStorage; //Used for the storage list
-    public static int numberofCows = 0; // Used for the storage list
+    public static int numberofCows = 0; // Used for the storage list // Counter
+    public static bool d;
+
+    //--------------------------------------------
 
     //Moving camera position  - PlayerArea to PlayerView
     public static int movement;
@@ -140,19 +152,29 @@ public class PlayersArea : MonoBehaviour
     public GameObject PurchaseList; //Panel
     public Text ObjectTypeText;
     public Text DescriptionText;
+    public Text CostText;
     public Button YesPurchaseBtn;
     public Button NoPurchaseBtn;
     public bool BtnClicked;
 
+    //Click Object - View Object
+    public GameObject ObjectViewPanel;
+    public Text ObjectnameText;
+    public Text SellAmountText;
+    public Button SellObjectBtn;
+    
 
     //Selling Variables - Resources
     public static int numberOfCowsSelling;
     public static int numberOfMilkSelling;
 
 
+
+
     //Variables for Object Effects
     public string ObjectType { get; set; } //Name - identifier
     public string Text { get; set; } // Used for DescriptionText Label
+    public int Cost { get; set; } //Used for cost label
     public int EffectOnStatHealth { get; set; }
     public int EffectOnStatHunger { get; set; }
     public int EffectOnStatThirst { get; set; }
@@ -160,6 +182,7 @@ public class PlayersArea : MonoBehaviour
     public int EffectOnStatAreaHappiness { get; set; }
     public int EffectOnStatPopulation { get; set; }
     public int EffectOnStatCoin { get; set; }
+    public int coinTransactionAmount { get; set; } //This will be used when selling an object 
 
 
 
@@ -173,16 +196,18 @@ public class PlayersArea : MonoBehaviour
     List<PlayersArea> purchaseBuildingObjects = new List<PlayersArea>();
     List<PlayersArea> purchaseCropsObjects = new List<PlayersArea>();
     List<PlayersArea> purchaseAnimalObjects = new List<PlayersArea>();
+    List<PlayersArea> purchaseShopObjects = new List<PlayersArea>();
 
 
-
-
+    int index;
+    int pos;
+    bool validSell = false;
 
     // Use this for initialization
     void Start()
     {
 
-        spawnObjects = GameObject.FindObjectOfType<SpawnObjects>();
+        //spawnObjects = GameObject.FindObjectOfType<SpawnObjects>();
         possiblePurchases();
     }
 
@@ -206,6 +231,8 @@ public class PlayersArea : MonoBehaviour
         setResourceMilk();
 
         getInputSellAmountsValue();
+
+        setAreaExpenses(); // NEEDS STILL TO BE SAVED!!!
     }
 
 
@@ -310,6 +337,32 @@ public class PlayersArea : MonoBehaviour
         int TotalMilkStorage = PlayerPrefs.GetInt("AreaMilk");
     }
 
+    public void setAreaExpenses()
+    {
+        PlayerPrefs.SetInt("AreaExpenses", areaExpenses);
+
+        // MilkCounterText.text = "Area Milk " + TotalMilkStorage.ToString();
+
+    }
+
+    public void getAreaExpenses()
+    {
+        int areaExpenses = PlayerPrefs.GetInt("AreaExpenses");
+    }
+
+
+    public void setAreaIncome()
+    {
+        PlayerPrefs.SetInt("AreaIncome", areaIncome);
+
+        // MilkCounterText.text = "Area Milk " + TotalMilkStorage.ToString();
+
+    }
+
+    public void getAreaIncome()
+    {
+        int areaIncome = PlayerPrefs.GetInt("AreaIncome");
+    }
 
 
 
@@ -333,13 +386,15 @@ public class PlayersArea : MonoBehaviour
 
         DescriptionText.text = purchaseWaterObjects[0].Text.ToString(); //Description
 
+        CostText.text = purchaseWaterObjects[0].Cost.ToString(); //Cost
+
         //Confirm purchase which will be a Tick button and No for a X button
 
         YesPurchaseBtn.gameObject.SetActive(true);
 
-        YesPurchaseBtn.onClick.AddListener(CreateWaterWell); //Spawn Prefab Method
-
         YesPurchaseBtn.onClick.AddListener(resetGUI); //Remove UI components method
+
+        YesPurchaseBtn.onClick.AddListener(validateWaterPurchase); //Spawn Prefab Method
 
         NoPurchaseBtn.gameObject.SetActive(true);
 
@@ -356,13 +411,15 @@ public class PlayersArea : MonoBehaviour
 
         DescriptionText.text = purchaseBuildingObjects[0].Text.ToString(); //Description
 
+        CostText.text = purchaseBuildingObjects[0].Cost.ToString(); //Cost 
+
         //Confirm purchase which will be a Tick button and No for a X button
 
         YesPurchaseBtn.gameObject.SetActive(true);
 
-        YesPurchaseBtn.onClick.AddListener(buildHouse); //Spawn Prefab Method
-
         YesPurchaseBtn.onClick.AddListener(resetGUI); //Remove UI components method
+
+        YesPurchaseBtn.onClick.AddListener(validateHousePurchase); //Spawn Prefab Method
 
         NoPurchaseBtn.gameObject.SetActive(true);
 
@@ -380,13 +437,15 @@ public class PlayersArea : MonoBehaviour
 
         DescriptionText.text = purchaseCropsObjects[0].Text.ToString(); //Description
 
+        CostText.text = purchaseCropsObjects[0].Cost.ToString(); //Cost of Purchase
+
         //Confirm purchase which will be a Tick button and No for a X button
 
         YesPurchaseBtn.gameObject.SetActive(true);
 
-        YesPurchaseBtn.onClick.AddListener(CreateCrops); //Spawn Prefab Method
-
         YesPurchaseBtn.onClick.AddListener(resetGUI); //Remove UI components method
+
+        YesPurchaseBtn.onClick.AddListener(validateCropsPurchase); //Spawn Prefab Method
 
         NoPurchaseBtn.gameObject.SetActive(true);
 
@@ -403,19 +462,206 @@ public class PlayersArea : MonoBehaviour
 
         DescriptionText.text = purchaseAnimalObjects[0].Text.ToString(); //Description
 
+        CostText.text = purchaseAnimalObjects[0].Cost.ToString();  // Cost
+
         //Confirm purchase which will be a Tick button and No for a X button
 
         YesPurchaseBtn.gameObject.SetActive(true);
-
-        YesPurchaseBtn.onClick.AddListener(createCow); //Spawn Prefab Method
-
+       
         YesPurchaseBtn.onClick.AddListener(resetGUI); //Remove UI components method
+
+        YesPurchaseBtn.onClick.AddListener(validateCowPurchase); //Spawn Prefab Method
 
         NoPurchaseBtn.gameObject.SetActive(true);
 
         NoPurchaseBtn.onClick.AddListener(resetGUI); //Remove UI components method
 
     }
+
+    //This will retieve the object type and text and display below
+    public void onClickViewShopPurchase() //Water Well View
+    {
+        PurchaseBtn.gameObject.SetActive(false);
+
+        ObjectTypeText.text = purchaseShopObjects[0].ObjectType.ToString(); // Name of the object
+
+        DescriptionText.text = purchaseShopObjects[0].Text.ToString(); //Description
+
+        CostText.text = purchaseShopObjects[0].Cost.ToString();
+
+        //Confirm purchase which will be a Tick button and No for a X button
+
+        YesPurchaseBtn.gameObject.SetActive(true);
+
+        YesPurchaseBtn.onClick.AddListener(resetGUI); //Remove UI components method
+
+        YesPurchaseBtn.onClick.AddListener(validateShopPurchase); //Spawn Prefab Method
+
+        NoPurchaseBtn.gameObject.SetActive(true);
+
+        NoPurchaseBtn.onClick.AddListener(resetGUI); //Remove UI components method
+
+    }
+
+    public void onClickViewObject()
+    {
+
+       //View Object UI 
+        ObjectViewPanel.gameObject.SetActive(true);
+        ObjectnameText.gameObject.SetActive(true);
+        SellAmountText.gameObject.SetActive(true);
+        SellObjectBtn.gameObject.SetActive(true);
+
+        ObjectnameText.text = spawnObjects.objectHit.ToString();
+
+        //   bool buildingList;
+
+        //  int position = Array.IndexOf(purchaseBuildingObjects,spawnObjects.objectHit );
+
+        //  if (spawnObjects.objectHit.Contains("Hut"))
+        //    {
+        //         SellAmountText.text = purchaseBuildingObjects[0].Cost.ToString();
+        //              // SellAmountText.text = purchaseCropsObjects[i].EffectOnStatCoin.ToString()
+        //  }
+
+
+        //  for loop the arrays?
+        // if(... || ...)
+
+
+        retrieveObjectDetails(); 
+
+     
+
+
+     
+
+
+        SellObjectBtn.onClick.AddListener(SellTransactionCoin);
+    }
+
+        
+
+    //OnClick of the object this will set text and get the objects data
+    
+    public void retrieveObjectDetails()
+    {
+      
+        coinTransactionAmount = 0;
+
+        for (int i = 0; i < purchaseBuildingObjects.Count; i++)
+        {
+            if (spawnObjects.objectHit == purchaseBuildingObjects[i].ObjectType)
+            {
+                i = pos;
+                SellAmountText.text = purchaseBuildingObjects[pos].Cost.ToString();
+
+                coinTransactionAmount = purchaseBuildingObjects[pos].Cost;
+
+          
+
+                validSell = true;
+
+
+            }
+        }
+
+        for (int i = 0; i < purchaseCropsObjects.Count; i++)
+        {
+            if (spawnObjects.objectHit == purchaseCropsObjects[i].ObjectType)
+            {
+                i = pos;
+                SellAmountText.text = purchaseCropsObjects[pos].Cost.ToString();
+
+                coinTransactionAmount = purchaseCropsObjects[pos].Cost;
+
+                
+
+                validSell = true;
+
+            }
+        }
+
+        for (int i = 0; i < purchaseAnimalObjects.Count; i++)
+        {
+            if (spawnObjects.objectHit == purchaseAnimalObjects[i].ObjectType)
+            {
+                i = pos;
+
+                SellAmountText.text = purchaseAnimalObjects[pos].Cost.ToString();
+
+                coinTransactionAmount = purchaseAnimalObjects[pos].Cost;
+
+               
+                validSell = true;
+            }
+        }
+
+        for (int i = 0; i < purchaseShopObjects.Count; i++)
+        {
+            if (spawnObjects.objectHit == purchaseShopObjects[i].ObjectType)
+            {
+                i = pos;
+
+                SellAmountText.text = purchaseShopObjects[pos].Cost.ToString();
+
+                coinTransactionAmount  = purchaseShopObjects[pos].Cost;
+
+          
+                validSell = true;
+
+            }
+        }
+
+        for (int i = 0; i < purchaseWaterObjects.Count; i++)
+        {
+            if (spawnObjects.objectHit == purchaseWaterObjects[i].ObjectType)
+            {
+                i = pos;
+                SellAmountText.text = purchaseWaterObjects[pos].Cost.ToString();
+                Debug.Log(coinTransactionAmount);
+
+
+                coinTransactionAmount = purchaseWaterObjects[pos].Cost; // This will set the amount that the user receives and is used in the sell transaction
+
+                
+                validSell = true;
+
+            }
+        }
+
+    }
+
+    //OnClick Sell btn will run this method
+    public void SellTransactionCoin()
+    {
+
+        if(validSell == true)
+        {
+            CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin + coinTransactionAmount; 
+            ch.setPlayerCoin();
+            validSell = false;
+            resetGUI();
+
+            spawnObjects.removeObject = true;
+
+        }
+        else if(validSell == false)
+        {
+            //Messagebox needed
+            Debug.Log("Unable to sell , please select a object to sell");
+
+            validSell = false;
+            resetGUI();
+        }
+
+ 
+        
+    }
+        
+
+
+
 
     //---------------------------------------------------------------------------------------------------------------------------------
     //This method will be used to close purchase list depending on the button they press as this could be used for a top right X button
@@ -430,6 +676,15 @@ public class PlayersArea : MonoBehaviour
         YesPurchaseBtn.onClick.RemoveAllListeners();
 
         NoPurchaseBtn.onClick.RemoveAllListeners();
+
+        //ViewObject UI
+        ObjectViewPanel.gameObject.SetActive(false);
+        ObjectnameText.gameObject.SetActive(false);
+        SellAmountText.gameObject.SetActive(false);
+        
+        SellObjectBtn.gameObject.SetActive(false);
+
+        validSell = false; // Reset Sell btn / Ability to sell
     }
 
 
@@ -464,24 +719,25 @@ public class PlayersArea : MonoBehaviour
 
 
         //------Animal List------
-        purchaseAnimalObjects.Add(new PlayersArea { ObjectType = "Cow", Text = "This is a cow - Cost: 100 Coins", EffectOnStatCoin = 100, EffectOnStatAreaHappiness = 5 });
+        purchaseAnimalObjects.Add(new PlayersArea { ObjectType = "Cow", Text = "This is a cow -" , Cost = EffectOnStatCoin = 50, EffectOnStatAreaHappiness = 5 });
 
 
         //---Water Object List---
-        purchaseWaterObjects.Add(new PlayersArea { ObjectType = "Well", Text = "This is a water well that can be used to ....... - Cost: 100 Coins", EffectOnStatCoin = 100, EffectOnStatAreaHappiness = 5 });
+        purchaseWaterObjects.Add(new PlayersArea { ObjectType = "Water Well", Text = "This is a water well that can be used to ....... " , Cost = EffectOnStatCoin = 100, EffectOnStatAreaHappiness = 5 });
 
 
 
         //------Plants / Plant Crops List------
-        purchaseCropsObjects.Add(new PlayersArea { ObjectType = "Crops", Text = " .. , , effects = ... ,  - Cost: 10 Coins", EffectOnStatCoin = 10, EffectOnStatAreaHappiness = 5 });
+        purchaseCropsObjects.Add(new PlayersArea { ObjectType = "Crops", Text = " .. , , effects = ..." , Cost = EffectOnStatCoin = 10, EffectOnStatAreaHappiness = 5 });
 
 
-        //------Building List------
+        //-----------------------------Building List-----------------------
 
         //Build Hut
-        purchaseBuildingObjects.Add(new PlayersArea { ObjectType = "Hut", Text = " Hut ... - Cost: 50 Coins", EffectOnStatCoin = 50, EffectOnStatAreaHappiness = 5 });
+        purchaseBuildingObjects.Add(new PlayersArea { ObjectType = "Hut", Text = " Hut ... - effects .... ", Cost =  EffectOnStatCoin = 25, EffectOnStatAreaHappiness = 5 });
+        
         //General Store
-        purchaseBuildingObjects.Add(new PlayersArea { ObjectType = "General Store", Text = " .. , Regalar income however there is a cost as you must pay your employees - Cost: 150 Coins", EffectOnStatCoin = 150, EffectOnStatAreaHappiness = 5 });
+        purchaseShopObjects.Add(new PlayersArea { ObjectType = "General Store", Text = " .. , Regalar income however there is a cost as you must pay your employees" , Cost =  150 , EffectOnStatCoin = 150, EffectOnStatAreaHappiness = 5 });
 
     }
 
@@ -490,8 +746,42 @@ public class PlayersArea : MonoBehaviour
 
     //-----------------------------Methods to call for Objects------------------------------------------
 
-    public void buildHouse() //Change name to hut or something more generic
+    public void validateHousePurchase()
     {
+        //--------TODO-------
+        //Area levels will have different rights to build and more to unlock
+        //UPgrades
+        //e.g area level 1 until 2 = 5 wells 
+        //ADD MORE 
+
+        //bool valid = false;
+
+
+        Debug.Log("House selected");
+        if(houseCounter >= 0 && houseCounter <=3)
+        {
+            buildHouse();
+        }
+
+        else if (houseCounter >= 4 && CharacterCreator.currentPlayerLevel >=2)
+        {
+
+            Debug.Log("Granted access");
+
+            buildHouse();
+  
+        }
+        else
+        {
+            //Messagebox
+            Debug.Log("Unable to purchase at this player Level");
+        }
+
+    }
+
+
+        public void buildHouse() //Change name to hut or something more generic
+        {
         //This is called when user wants to build house
         // Must have 50 coins
         // call method spawnObjects which creates prefab
@@ -501,21 +791,10 @@ public class PlayersArea : MonoBehaviour
         //Set amount of house
         //One house allows 3 people?
 
-        //--------TODO-------
-        //Area levels will have different rights to build and more to unlock
-        //e.g area level 1 until 2 = 5 wells 
 
-        //bool valid = false;
-
-        houseCounter++;
-
-        // string userInput = "";
-
+        bool valid = false;
         Debug.Log("House selected");
 
-        if (houseCounter > 12)
-        {
-            Debug.Log("Unable to build , you can only have 5 houses at this areas level ");
 
             //Would you like to upgrade these houses to an estate for 1300 Coins
 
@@ -538,18 +817,16 @@ public class PlayersArea : MonoBehaviour
             //     Debug.Log("Purchase cancelled");
             //  }
 
-        }
-
-        else
-        {
+       
 
             //Purchase + funds Check
             if (CharacterCreator.currentPlayerCoin >= 10)
             {
-                CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - purchaseWaterObjects[0].EffectOnStatCoin;
+                CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - purchaseBuildingObjects[0].EffectOnStatCoin;
                 ch.setPlayerCoin();
 
                 valid = true;
+                
                 Debug.Log("House purchase");
             }
             else
@@ -561,7 +838,7 @@ public class PlayersArea : MonoBehaviour
 
 
             //Timer of how often water gens
-        }
+        
 
         if (valid == true) // IF the player has enough funds  -  stats and update stats - Instantiate prefab
         {
@@ -597,8 +874,10 @@ public class PlayersArea : MonoBehaviour
 
             //Create House / Prefab on screen
             spawnObjects.SetItem(hut);
+            spawnObjects.name = "Hut";
+           
 
-
+            houseCounter++;
 
 
         }
@@ -608,12 +887,8 @@ public class PlayersArea : MonoBehaviour
             Debug.Log("Unable to spawn due player not having funds");
         }
 
-
-
-
-
-
     }
+
 
 
 
@@ -643,6 +918,43 @@ public class PlayersArea : MonoBehaviour
     // Once you active water well,  WellwaterGen == true 
     //timer
 
+
+
+    public void validateWaterPurchase()
+    {
+        //--------TODO-------
+        //Area levels will have different rights to build and more to unlock
+        //UPgrades
+        //e.g area level 1 until 2 = 5 wells 
+        //ADD MORE 
+
+        //bool valid = false;
+
+
+        Debug.Log("Water selected");
+        if (waterWellCounter >= 0 && waterWellCounter <= 3)
+        {
+            CreateWaterWell(); 
+        }
+
+        else if (houseCounter >= 4 && CharacterCreator.currentPlayerLevel >= 2)
+        {
+
+            Debug.Log("Granted access");
+
+            CreateWaterWell();
+
+        }
+        else
+        {
+            //Messagebox
+            Debug.Log("Unable to purchase at this player Level");
+        }
+
+    }
+
+
+
     public void CreateWaterWell()
     {
         //--------TODO-------
@@ -653,23 +965,10 @@ public class PlayersArea : MonoBehaviour
         bool valid = false;
 
 
-
-        waterWellCounter++;
-
-        Debug.Log("Water Well selected");
-
-        if (waterWellCounter > 5)
-        {
-            Debug.Log("Unable to build , you can only have 5 water wells at this areas level ");
-        }
-        else
-        {
-
-
             //Purchase + funds Check
             if (CharacterCreator.currentPlayerCoin >= 10)
             {
-                CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - 10;
+                CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - purchaseWaterObjects[0].Cost;
 
 
 
@@ -687,7 +986,7 @@ public class PlayersArea : MonoBehaviour
 
             //Creation of well (Prefab graphic)
             //Timer of how often water gens
-        }
+        
 
         if (valid == true)
         {
@@ -713,6 +1012,8 @@ public class PlayersArea : MonoBehaviour
 
             //Create waterWell / Prefab on screen
             spawnObjects.SetItemWaterWell(WaterWell);
+
+            spawnObjects.name = "Water Well";
         }
 
         else // prevents prefab instantiate
@@ -785,6 +1086,42 @@ public class PlayersArea : MonoBehaviour
 
     }
 
+    public void validateCropsPurchase()
+    {
+        //--------TODO-------
+        //Area levels will have different rights to build and more to unlock
+        //UPgrades
+        //e.g area level 1 until 2 = 5 wells 
+        //ADD MORE 
+
+        //bool valid = false;
+
+
+        Debug.Log("Crops selected");
+        if (cropsCounter >= 0 && cropsCounter <= 3)
+        {
+            CreateCrops();
+        }
+
+        else if (cropsCounter >= 4 && CharacterCreator.currentPlayerLevel >= 2)
+        {
+
+            Debug.Log("Granted access");
+            CreateCrops();
+        }
+        else
+        {
+            //Messagebox
+            Debug.Log("Unable to purchase at this player Level");
+        }
+
+    }
+
+
+
+
+
+
     public void CreateCrops()
     {
         //--------TODO-------
@@ -796,37 +1133,21 @@ public class PlayersArea : MonoBehaviour
         bool valid = false;
 
 
-
-        cropsCounter++;
-
-        Debug.Log("Crops selected");
-
-        if (cropsCounter > 5)
+        //Purchase + funds Check
+        if (CharacterCreator.currentPlayerCoin >= 10)
         {
-            Debug.Log("Unable to perfrom crops action , you can only have 5 crops at this areas level ");
+            CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - purchaseCropsObjects[0].Cost;
+
+
+
+            ch.setPlayerCoin();
+
+            valid = true;
+            Debug.Log("Crops purchase");
         }
         else
         {
-
-
-            //Purchase + funds Check
-            if (CharacterCreator.currentPlayerCoin >= 10)
-            {
-                CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - 10; //=-.CoinList[54]
-                ch.setPlayerCoin();
-
-                valid = true;
-                Debug.Log("crop plot purchase");
-            }
-            else
-            {
-                Debug.Log("Not enough funds - 10 coins are needed");
-            }
-
-            //Purchase confirmation + Creation 
-
-            //Creation of well (Prefab graphic)
-            //Timer of how often water gens
+            Debug.Log("Not enough funds - 10 coins are needed");
         }
 
         if (valid == true)
@@ -848,7 +1169,7 @@ public class PlayersArea : MonoBehaviour
 
             //Create waterWell / Prefab on screen
             spawnObjects.SetItemCrops(CropsPrefab);
-
+            spawnObjects.name = "Crops";
         }
 
 
@@ -862,92 +1183,74 @@ public class PlayersArea : MonoBehaviour
     }
 
 
+    public void validateCowPurchase()
+    {
+        //--------TODO-------
+        //Area levels will have different rights to build and more to unlock
+        //UPgrades
+        //e.g area level 1 until 2 = 5 wells 
+        //ADD MORE 
+
+        //bool valid = false;
+
+
+        Debug.Log("Cow selected");
+        if (numberofCows >= 0 && numberofCows <= 3)
+        {
+            createCow();
+        }
+
+        else if (numberofCows >= 4 && CharacterCreator.currentPlayerLevel >= 2)
+        {
+
+            Debug.Log("Granted access");
+            createCow();
+        }
+        else
+        {
+            //Messagebox
+            Debug.Log("Unable to purchase at this player Level");
+        }
+
+    }
+
     //--Animal - Cow
     public void createCow()
     {
         //Add cow to the array within the AreaResources 
         //AreaResources CLASS will create the cow and add its details
         //Save GAME 
-        //
 
-        //
+       valid = false;
 
+       //Purchase + funds Check
+       if (CharacterCreator.currentPlayerCoin >= 100)
+       {
+             CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - purchaseAnimalObjects[0].Cost;
+             ch.setPlayerCoin();
 
+             valid = true;
+             Debug.Log("Cow purchase");
+       }
 
+       else
+       {
+             Debug.Log("Not enough funds - 100 coins are needed");
 
-
-
-        //AreaResources.numberofCows++;
-
-        // string userInput = "";
-
-        Debug.Log("Cow selected");
-
-        if (numberofCows > 12)
-        {
-            Debug.Log("Unable to build , you can only have 5 cows at this areas level ");
-
-            //Would you like to upgrade these houses to an estate for 1300 Coins
-
-            //Benefits - Community spirt and happiness increase
-            //  Debug.Log("Would you like to upgrade these houses to an estate for 1300 Coins");
-
-            //User input but we want it to be a button yes or no buttons
-            //  if(userInput == "Yes") 
-            //  {
-            //Yes
-            //   CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - 1300;
-
-            //Upgrade House build
-            //   upgradeBuild.UpgradeHouseBuild();
-            // }
-
-            //   else if(userInput == "No")
-            // {
-            //No
-            //     Debug.Log("Purchase cancelled");
-            //  }
-
-        }
-
-        else
-        {
-
-            //Purchase + funds Check
-            if (CharacterCreator.currentPlayerCoin >= 100)
-            {
-                CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - purchaseAnimalObjects[0].EffectOnStatCoin;
-                ch.setPlayerCoin();
-
-                valid = true;
-                Debug.Log("Cow purchase");
-            }
-            else
-            {
-                Debug.Log("Not enough funds - 100 coins are needed");
-
-                valid = false;
-            }
+             valid = false;
+       }
 
 
             //Timer of how often water gens
-        }
+        
 
-        if (valid == true) // IF the player has enough funds  -  stats and update stats - Instantiate prefab
-        {
+       if (valid == true) // IF the player has enough funds  -  stats and update stats - Instantiate prefab
+       {
 
             Debug.Log("creating cow");
-
-
-
+            
             //Storage - Player Storage/SAVE
             areaResources.addCowToArray();
-
-
-
-
-
-
 
             //XP
             CharacterCreator.currentXP = CharacterCreator.currentXP + 100;
@@ -958,17 +1261,17 @@ public class PlayersArea : MonoBehaviour
 
             validInstantiate = true; // Allows SpawnObject Script to call method which spawns prefab
 
-
-
-            //Create House / Prefab on screen
+            //Create Cow / Prefab on screen
             spawnObjects.SetItem(CowPrefab);
-
+            spawnObjects.name = "Cow";
             numberofCows = numberofCows + 1;
+
+            //CowPrefab.name = numberofCows.ToString();
 
             setResourceCow();
 
 
-        }
+       }
 
 
     }
@@ -1006,7 +1309,7 @@ public class PlayersArea : MonoBehaviour
 
         //button to close
         CloseStorageBtn.gameObject.SetActive(true);
-
+        CloseStorageBtn.onClick.AddListener(resetGUI);
     }
 
     public void StoragePanelInActive()
@@ -1046,12 +1349,130 @@ public class PlayersArea : MonoBehaviour
 
     }
 
-   
+    public void validateShopPurchase()
+    {
+        //--------TODO-------
+        //Area levels will have different rights to build and more to unlock
+        //UPgrades
+        //e.g area level 1 until 2 = 5 wells 
+        //ADD MORE 
 
-         
+        //bool valid = false;
+
+
+        Debug.Log("Shop selected");
+        if (shopCounter >= 0 && shopCounter <= 3)
+        {
+            createShop();
+        }
+
+        else if (shopCounter>= 4 && CharacterCreator.currentPlayerLevel >= 2)
+        {
+
+            Debug.Log("Granted access");
+            createShop();
+        }
+        else
+        {
+            //Messagebox
+            Debug.Log("Unable to purchase at this player Level");
+        }
+
+    }
 
 
 
+
+
+
+    public void createShop()
+    {
+        bool valid = false;
+
+            //Purchase + funds Check
+       if (CharacterCreator.currentPlayerCoin >= 10)
+       {
+
+          CharacterCreator.currentPlayerCoin = CharacterCreator.currentPlayerCoin - purchaseShopObjects[0].Cost;
+          ch.setPlayerCoin();
+
+          valid = true;
+          Debug.Log("shop purchase");
+
+       }
+       else
+       {
+          Debug.Log("Not enough funds - 10 coins are needed");
+       }
+
+            //Purchase confirmation + Creation 
+
+        if (valid == true)
+        {
+
+            Debug.Log("creating shop plot");
+            // Create well on screen --TODO!!!
+
+
+            //Storage - Player Storage/SAVE
+
+            // add Timer + add food??
+            statsManager.ShopIncomeTimerMethod();
+            statsManager.ShopExpensesTimerMethod();
+
+            //Pay for products / Employees
+
+
+            //STORE LEVEL - to be able to upgrade
+
+
+            //START INCOME TIMER
+            statsManager.PlayerLevelCheck();
+
+
+            validInstantiate = true; // Allows SpawnObject Script to call method which spawns prefab
+
+
+            //Create waterWell / Prefab on screen
+            spawnObjects.SetItemShop(ShopPrefab);
+            spawnObjects.name = "General Store"; // THIS needs updated on upgrade or change of name 
+        }
+    }
+
+    //-------------------------Selling Objects -- e.g Buildings ---------------------------------
+
+    //Selling building
+    //--Price of sell most be less than bought for 
+    //--Any validation 
+
+    //--Remove Prefab
+    //--stop any timers
+    //--Effect on stats of the area??
+    //--Situations if you do this ... 
+    //--Confirm Action 
+    //--Retrieve money 
+    //--Save
+
+
+
+    //Destorying so that you can upgrade
+    //--Validation
+    //--Retieve Money
+    //--Remove Prefab
+    //--stop any timers
+    //--Effect on stats of the area??
+    //--Situations if you do this ... 
+    //--Confirm Action
+    //--Retrieve money 
+    //--Save
+
+
+
+
+
+
+
+    //--------------------------Camera------------------------
 
 
     //Way back to PlayerArea from movement of different platforms
